@@ -14,16 +14,29 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2025-05-15',
+  devServer: {
+    port: 5001, // default: 3000
+  },
   devtools: { enabled: false },
   ssr: false,
   typescript: {
     shim: false,
   },
+  css: ['~/assets/main.scss'],
   modules: ['@nuxt/eslint', '@nuxtjs/device','@nuxtjs/tailwindcss','@nuxtjs/i18n'],
   i18n: {
     vueI18n: '../i18n.config.ts',
     bundle: {
       optimizeTranslationDirective: false,
+    },
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "~/assets/_extra.scss" as *;',
+        },
+      },
     },
   }
 })

@@ -1,0 +1,37 @@
+@use "_checkbox";
+
+@use "tailwindcss/components";
+
+@layer components {
+  .yf-btn-primary {
+    @apply text-slate-50 h-10 rounded-2xl bg-yamfive disabled:bg-slate-200
+  }
+
+  .yf-btn-secondary {
+    @apply text-slate-600 h-10 rounded-2xl bg-slate-300 disabled:bg-slate-200
+  }
+
+  .yf-btn-red-circle {
+    @apply text-white h-10 w-10 rounded-full bg-red-600 flex justify-center items-center
+  }
+
+  .yf-btn-green-circle {
+    @apply text-white h-10 w-10 rounded-full bg-yamfive flex justify-center items-center
+  }
+
+  .yf-text-base {
+    @apply antialiased text-slate-600
+  }
+
+  .yf-text-base-green {
+    @apply antialiased text-yamfive
+  }
+
+  .yf-text-light {
+    @apply antialiased text-slate-400
+  }
+
+  .yf-input-base {
+    @apply ring-transparent antialiased text-slate-600 text-sm outline-none placeholder:text-slate-400
+  }
+}

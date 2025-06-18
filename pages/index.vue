@@ -1,11 +1,3 @@
 <script lang="ts" setup>
-definePageMeta({
-  layout: 'public',
-})
+await navigateTo('/public/login')
 </script>
-
-<template>
-  <div class="text-yamfive">
-    prova
-  </div>
-</template>
