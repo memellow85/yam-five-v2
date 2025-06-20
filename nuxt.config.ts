@@ -23,12 +23,21 @@ export default defineNuxtConfig({
     shim: false,
   },
   css: ['~/assets/main.scss'],
-  modules: ['@nuxt/eslint', '@nuxtjs/device','@nuxtjs/tailwindcss','@nuxtjs/i18n'],
+  modules: [
+    '@pinia/nuxt', 
+    '@nuxt/eslint', 
+    '@nuxtjs/device',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/i18n'
+  ],
   i18n: {
     vueI18n: '../i18n.config.ts',
     bundle: {
       optimizeTranslationDirective: false,
     },
+  },
+  pinia: {
+    storesDirs: ['./stores/**']
   },
   vite: {
     css: {

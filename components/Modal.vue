@@ -6,6 +6,10 @@ interface ModalInterface {
   title?: string
   close?: boolean
   submit?: boolean
+  warning?: boolean
+  error?: boolean
+  success?: boolean
+  scroll?: boolean
 }
 const props = defineProps<ModalInterface>()
 
@@ -19,16 +23,20 @@ defineEmits(['closeModal', 'submitModal'])
     @touchend="$emit('closeModal')" />
   <div 
     :class="[
-      'fixed z-20 w-11/12 left-1/2 translate-x-[-50%] transition-all duration-500 rounded-2xl bg-white p-3',
+      'fixed overflow-hidden z-20 w-11/12 left-1/2 translate-x-[-50%] transition-all duration-500 rounded-2xl bg-white p-3',
       {
         '-bottom-full opacity-0': !props.show,
-        'bottom-5 opacity-100': props.show
+        'bottom-5 opacity-100': props.show,
+        '!bg-yellow-200': props.warning,
+        '!bg-green-200': props.success,
+        '!bg-red-200': props.error,
+        'flex flex-col h-3/4': props.scroll
       }
     ]">
     <header v-if="props.title" class="border-b border-slate-200 pb-3">
       <h2 class="text-base yf-text-base">{{ props.title }}</h2>
     </header>
-    <main class="py-3">
+    <main class="py-3 flex-1 overflow-y-auto">
       <slot />
     </main>
     <footer 

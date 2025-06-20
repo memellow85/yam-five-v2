@@ -1,14 +1,15 @@
 @use "_checkbox";
+@use "_loader";
 
 @use "tailwindcss/components";
 
 @layer components {
   .yf-btn-primary {
-    @apply text-slate-50 h-10 rounded-2xl bg-yamfive disabled:bg-slate-200
+    @apply text-slate-50 h-10 rounded-2xl bg-yamfive disabled:bg-slate-200 disabled:text-slate-300
   }
 
   .yf-btn-secondary {
-    @apply text-slate-600 h-10 rounded-2xl bg-slate-300 disabled:bg-slate-200
+    @apply text-slate-600 h-10 rounded-2xl bg-slate-300 disabled:bg-slate-200 disabled:text-slate-300
   }
 
   .yf-btn-red-circle {

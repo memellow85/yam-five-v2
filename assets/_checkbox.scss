@@ -1,37 +1,17 @@
 @layer components {
-  .yf-checkbox {
+  .yf-checkbox-label {
     @apply grid grid-flow-col justify-start items-center
   }
 
-  .yf-checkbox__label {
-    @apply ml-1.5 text-sm leading-none transition-all duration-200 ease-in-out
+  .yf-checkbox-label-span {
+    @apply grid place-items-center border border-yamfive before:block before:transition-transform before:duration-200 before:ease-in-out before:transform before:scale-0 before:bg-yamfive
   }
 
-  .yf-checkbox__input {
-    @apply flex cursor-pointer
+  .yf-checkbox-label_span {
+    @apply ml-1.5 text-sm leading-none transition-all duration-200 ease-in-out yf-text-base
   }
 
-  .yf-checkbox__input input {
-    @apply size-0 opacity-0
-  }
-
-  .yf-checkbox__control {
-    @apply grid place-items-center
-  }
-
-  input + .yf-checkbox__control::before {
-    @apply size-2 block transition-transform duration-200 ease-in-out transform scale-0 bg-yamfive
-  }
-
-  input:checked + .yf-checkbox__control::before {
-    @apply transform scale-100 bg-yamfive
-  }
-
-  input + .yf-checkbox__control {
-    @apply size-3.5 border-2 border-yamfive
-  }
-
-  input:checked + .yf-checkbox__control {
-    @apply border-2 border-yamfive
+  input:checked + span::before {
+    @apply scale-100
   }
 }

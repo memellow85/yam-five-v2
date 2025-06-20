@@ -1,9 +1,85 @@
 <script lang="ts" setup>
 import { UserIcon, EnvelopeIcon, KeyIcon } from '@heroicons/vue/24/outline'
+import { validatorEmail, validatorPassword } from '#imports'
 
 definePageMeta({
   layout: 'public',
 })
+
+interface RegisterInterface {
+  name: string
+  email: string
+  conf_email: string
+  password: string
+  repeat_password: string
+}
+
+const { t } = useI18n()
+const alertStore = useMyAlertStore()
+const loaderStore = useMyLoaderStore()
+
+const isFocus = ref(false)
+const isValidEmail = ref(true)
+const isValidConfEmail = ref(true)
+const isValidPassword = ref(true)
+const isValidConfPassword = ref(true)
+const disabled = ref(true)
+const formData: RegisterInterface = reactive({
+  name: '',
+  email: '',
+  conf_email: '',
+  password: '',
+  repeat_password: ''
+})
+
+const onBlurHandler = (field: string) => {
+  isFocus.value = false
+  switch (field) {
+    case 'email':
+      isValidEmail.value = validatorEmail(formData.email) || formData.email === ''
+      break
+    case 'conf_email':
+      isValidConfEmail.value = validatorEmail(formData.conf_email) || formData.conf_email === ''
+      break
+    case 'password':
+      isValidPassword.value = validatorPassword(formData.password) || formData.password === ''
+      break
+    case 'repeat_password':
+      isValidConfPassword.value = validatorPassword(formData.repeat_password) || formData.repeat_password === ''
+      break
+  }
+  disabled.value = !(
+    isValidEmail.value && isValidConfEmail.value && isValidPassword.value && isValidConfPassword.value && 
+    !isFocus.value && 
+    formData.email !== '' && formData.password !== '' && formData.conf_email !== '' && formData.repeat_password !== '' &&
+    formData.email === formData.conf_email && formData.password === formData.repeat_password && 
+    formData.name !== ''
+  )
+}
+
+const submitHandler = async () => {
+  loaderStore.setLoader(true)
+  /**
+   * TODO gestione reale della registrazione
+   */
+  setTimeout(() => {
+    loaderStore.setLoader(false)
+    alertStore.setAlert('s', t('user_create'))
+    setTimeout(async () => {
+      await navigateTo('/public/login')
+    }, 3000)
+  }, 5000)
+}
+
+watch(
+  formData,
+  (newValue) => {
+    disabled.value = !(
+      validatorEmail(newValue.email) && validatorEmail(newValue.conf_email) && validatorPassword(newValue.password) && validatorPassword(newValue.repeat_password)
+    )
+  },
+  { deep: true },
+)
 </script>
 
 <template>
@@ -17,55 +93,101 @@ definePageMeta({
     <div class="w-full relative">
       <UserIcon class="antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2 text-slate-400" />
       <input
-          name="name"
-          type="text"
-          class="w-full rounded-t-lg h-10 pl-9 yf-input-base"
-          autocomplete="off"
-          :placeholder="$t('name')"
-        />
+        v-model="formData.name"
+        name="name"
+        type="text"
+        class="w-full rounded-t-lg h-10 pl-9 yf-input-base"
+        autocomplete="off"
+        :placeholder="$t('name')"
+        @focus="isFocus = true"
+        @blur="onBlurHandler('name')"
+      />
     </div>  
     <div class="w-full relative">
-      <EnvelopeIcon class="antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2 text-slate-400" />
+      <EnvelopeIcon 
+        :class="[
+          'antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2',
+          {
+            'text-slate-400': isValidEmail,
+            'text-red-600': !isValidEmail
+          }
+        ]" />
       <input
-          name="email"
-          type="text"
-          class="w-full rounded-t-lg h-10 pl-9 yf-input-base"
-          autocomplete="off"
-          :placeholder="$t('email')"
+        v-model="formData.email"
+        name="email"
+        type="text"
+        class="w-full rounded-t-lg h-10 pl-9 yf-input-base"
+        autocomplete="off"
+        :placeholder="$t('email')"
+        @focus="isFocus = true"
+        @blur="onBlurHandler('email')"
+      />
+    </div>
+    <div class="w-full relative">
+      <EnvelopeIcon 
+        :class="[
+          'antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2',
+          {
+            'text-slate-400': isValidConfEmail,
+            'text-red-600': !isValidConfEmail
+          }
+        ]" />
+      <input
+        v-model="formData.conf_email"
+        name="conf_email"
+        type="text"
+        class="w-full rounded-t-lg h-10 pl-9 yf-input-base"
+        autocomplete="off"
+        :placeholder="$t('conf_email')"
+        @focus="isFocus = true"
+        @blur="onBlurHandler('conf_email')"
+      />
+    </div>
+    <div class="w-full relative">
+      <KeyIcon 
+        :class="[
+          'antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2',
+          {
+            'text-slate-400': isValidPassword,
+            'text-red-600': !isValidPassword
+          }
+        ]" />
+      <input
+        v-model="formData.password"
+        name="password"
+        type="password"
+        class="w-full h-10 rounded-b-lg pl-9 yf-input-base"
+        autocomplete="off"
+        :placeholder="$t('password')"
+        @focus="isFocus = true"
+        @blur="onBlurHandler('password')"
         />
     </div>
     <div class="w-full relative">
-      <EnvelopeIcon class="antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2 text-slate-400" />
+      <KeyIcon 
+        :class="[
+          'antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2',
+          {
+            'text-slate-400': isValidConfPassword,
+            'text-red-600': !isValidConfPassword
+          }
+        ]" />
       <input
-          name="conf_email"
-          type="text"
-          class="w-full rounded-t-lg h-10 pl-9 yf-input-base"
-          autocomplete="off"
-          :placeholder="$t('conf_email')"
-        />
-    </div>
-    <div class="w-full relative">
-      <KeyIcon class="antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2 text-slate-400" />
-      <input
-          name="password"
-          type="password"
-          class="w-full h-10 rounded-b-lg pl-9 yf-input-base"
-          autocomplete="off"
-          :placeholder="$t('password')"
-        />
-    </div>
-    <div class="w-full relative">
-      <KeyIcon class="antialiased h-5 w-5 absolute top-1/2 translate-y-[-50%] left-2 text-slate-400" />
-      <input
-          name="repeat_password"
-          type="password"
-          class="w-full h-10 rounded-b-lg pl-9 yf-input-base"
-          autocomplete="off"
-          :placeholder="$t('repeat_password')"
+        v-model="formData.repeat_password"
+        name="repeat_password"
+        type="password"
+        class="w-full h-10 rounded-b-lg pl-9 yf-input-base"
+        autocomplete="off"
+        :placeholder="$t('repeat_password')"
+        @focus="isFocus = true"
+        @blur="onBlurHandler('repeat_password')"
         />
     </div>
   </div>
-  <button class="w-full yf-btn-primary">{{ $t('register') }}</button>
+  <button 
+    class="w-full yf-btn-primary"
+    :disabled="disabled"
+    @touchend="submitHandler">{{ $t('register') }}</button>
   <p 
     class="
       my-2 text-center text-sm yf-text-light relative
