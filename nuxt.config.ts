@@ -28,7 +28,8 @@ export default defineNuxtConfig({
     '@nuxt/eslint', 
     '@nuxtjs/device',
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
+    '@vite-pwa/nuxt'
   ],
   i18n: {
     vueI18n: '../i18n.config.ts',
