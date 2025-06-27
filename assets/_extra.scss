@@ -11,6 +11,10 @@
   .yf-btn-secondary {
     @apply text-slate-600 h-10 rounded-2xl bg-slate-300 disabled:bg-slate-200 disabled:text-slate-300
   }
+  
+  .yf-btn-exit {
+    @apply text-white h-10 rounded-2xl bg-sky-950
+  }
 
   .yf-btn-red-circle {
     @apply text-white h-10 w-10 rounded-full bg-red-600 flex justify-center items-center

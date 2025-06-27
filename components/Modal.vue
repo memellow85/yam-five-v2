@@ -10,6 +10,7 @@ interface ModalInterface {
   error?: boolean
   success?: boolean
   scroll?: boolean
+  menu?: boolean
 }
 const props = defineProps<ModalInterface>()
 
@@ -30,13 +31,21 @@ defineEmits(['closeModal', 'submitModal'])
         '!bg-yellow-200': props.warning,
         '!bg-green-200': props.success,
         '!bg-red-200': props.error,
-        'flex flex-col h-3/4': props.scroll
+        'flex flex-col h-3/4': props.scroll,
+        '!p-0': props.menu
       }
     ]">
     <header v-if="props.title" class="border-b border-slate-200 pb-3">
       <h2 class="text-base yf-text-base">{{ props.title }}</h2>
     </header>
-    <main class="py-3 flex-1 overflow-y-auto">
+    <main
+      :class="[
+        'flex-1',
+        {
+          'py-3 overflow-y-auto': !props.menu,
+          'overflow-hidden grid grid-cols-1': props.menu
+        }
+      ]">
       <slot />
     </main>
     <footer 

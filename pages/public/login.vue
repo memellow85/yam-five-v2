@@ -21,6 +21,7 @@ const { toClipboard } = useClipboard()
 const { t } = useI18n()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
+const userStore = useMyUserStore()
 
 const recoveryMailModal = ref(false)
 const guideModal = ref(false)
@@ -60,8 +61,13 @@ const copyLinkHandler = async () => {
   alertStore.setAlert('s', t('message_copy'))
 }
 
-const playNoLoginHandler = () => {
-  alertStore.setAlert('w', t('work_in_progress'))
+const playNoLoginHandler = async () => {
+  userStore.setUser({
+    name: t('guest'),
+    image: '',
+    guest: true
+  })
+  await navigateTo('/private/home')
 }
 
 const submitHandler = () => {
@@ -105,6 +111,9 @@ watch(
     <p class="rounded-xl p-2 bg-slate-300 text-center yf-text-base">{{ $t('login') }}</p>
     <NuxtLink to="/public/register" class="p-2 text-center yf-text-light">{{ $t('register') }}</NuxtLink>
   </div>
+  <ClientOnly>
+      PWA Installed: {{ $pwa?.isPWAInstalled }}
+    </ClientOnly>
   <div
     class="mt-5 border rounded-lg divide-y divide-slate-200 border-slate-200 bg-white"
   >
@@ -224,7 +233,7 @@ watch(
   <!-- MODAL GUIDE -->
    <Modal 
     :show="guideModal" 
-    :title="$t('guide')" 
+    :title="$t('menu.guide')" 
     close 
     scroll
     @close-modal="showGuideModalHandler(false)">
