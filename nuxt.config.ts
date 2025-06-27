@@ -10,7 +10,9 @@ export default defineNuxtConfig({
             'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height',
         },
       ],
-      link: [],
+      link: [
+        { rel: 'manifest', href: '/manifest.webmanifest' }
+      ],
     },
   },
   compatibilityDate: '2025-05-15',
@@ -43,6 +45,11 @@ export default defineNuxtConfig({
   pwa: {
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico'],
+    manifestFilename: 'manifest.webmanifest',
+    injectRegister: 'auto',
+    workbox: {
+      navigateFallback: '/index.html',
+    },
     manifest: {
       name: 'YamFive',
       short_name: 'YamFive',
@@ -69,6 +76,9 @@ export default defineNuxtConfig({
           purpose: 'any maskable'
         }
       ]
+    },
+    devOptions: {
+      enabled: true, // utile anche in sviluppo
     }
   },
   vite: {
