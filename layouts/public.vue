@@ -16,6 +16,10 @@ const loaderStore = useMyLoaderStore()
           </h1>
         </header>
         <main class="pt-9 pb-3">
+          {{ $pwa?.needRefresh }}
+          {{ $pwa?.showInstallPrompt }}
+          {{ $pwa?.offlineReady }}
+          {{ $pwa?.isPWAInstalled }}
           <div v-if="$pwa?.needRefresh">
             New content available, click on reload button to update.
             <div>
