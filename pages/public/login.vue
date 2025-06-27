@@ -107,6 +107,7 @@ watch(
 </script>
 
 <template>
+  {{ $pwa }}
   <div class="grid grid-cols-2 p-2 rounded-2xl bg-slate-200">
     <p class="rounded-xl p-2 bg-slate-300 text-center yf-text-base">{{ $t('login') }}</p>
     <NuxtLink to="/public/register" class="p-2 text-center yf-text-light">{{ $t('register') }}</NuxtLink>

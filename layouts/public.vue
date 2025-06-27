@@ -16,6 +16,7 @@ const loaderStore = useMyLoaderStore()
           </h1>
         </header>
         <main class="pt-9 pb-3">
+          {{ $pwa }}
           {{ $pwa?.needRefresh }}
           {{ $pwa?.showInstallPrompt }}
           {{ $pwa?.offlineReady }}
