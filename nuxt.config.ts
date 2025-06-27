@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   },
   pwa: {
     registerType: 'autoUpdate',
-    includeAssets: ['favicon.ico'],
+    includeAssets: ['favicon.ico', 'icons/icon192.png', 'icons/icon512.png', 'index.html'],
     manifestFilename: 'manifest.webmanifest',
     injectRegister: 'auto',
     /* workbox: {
