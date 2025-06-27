@@ -1,0 +1,17 @@
+@layer components {
+  .yf-checkbox-label {
+    @apply grid grid-flow-col justify-start items-center
+  }
+
+  .yf-checkbox-label-span {
+    @apply grid place-items-center border border-yamfive before:block before:transition-transform before:duration-200 before:ease-in-out before:transform before:scale-0 before:bg-yamfive
+  }
+
+  .yf-checkbox-label_span {
+    @apply ml-1.5 text-sm leading-none transition-all duration-200 ease-in-out yf-text-base
+  }
+
+  input:checked + span::before {
+    @apply scale-100
+  }
+}

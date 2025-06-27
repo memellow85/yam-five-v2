@@ -1,3 +1,3 @@
 <script lang="ts" setup>
-await navigateTo('/public/login')
+await navigateTo('/private/home')
 </script>
