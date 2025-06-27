@@ -1,0 +1,17 @@
+@layer components {
+  .yf-loader-element {
+    @apply mx-0.5 animate-wave text-yamfive
+  }
+  .yf-loader-element-grey {
+    @apply mx-0.5 animate-wave text-slate-600
+  }
+  .yf-loader-element:last-child {
+    @apply m-0
+  }
+  .yf-loader-element:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .yf-loader-element:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}
