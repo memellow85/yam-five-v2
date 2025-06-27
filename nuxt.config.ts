@@ -47,9 +47,9 @@ export default defineNuxtConfig({
     includeAssets: ['favicon.ico'],
     manifestFilename: 'manifest.webmanifest',
     injectRegister: 'auto',
-    workbox: {
+    /* workbox: {
       navigateFallback: '/index.html',
-    },
+    }, */
     manifest: {
       name: 'YamFive',
       short_name: 'YamFive',
