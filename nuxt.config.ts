@@ -50,6 +50,10 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: '/index.html',
       navigateFallbackAllowlist: [/^\/$/],
+      globPatterns: [
+        '*/*.*',
+        '*.*'
+      ]
     },
     manifest: {
       name: 'YamFive',
