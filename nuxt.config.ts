@@ -50,10 +50,16 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: '/index.html',
       navigateFallbackAllowlist: [/^\/$/],
-      globPatterns: [
-        '*/*.*',
-        '*.*'
-      ]
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}'],
+      runtimeCaching: [
+      {
+        urlPattern: /^\/index\.html$/,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'html-cache',
+        },
+      },
+    ],
     },
     manifest: {
       name: 'YamFive',
