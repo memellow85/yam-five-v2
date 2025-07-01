@@ -48,6 +48,8 @@ export default defineNuxtConfig({
     manifestFilename: 'manifest.webmanifest',
     injectRegister: 'auto',
     workbox: {
+      navigateFallback: '/',
+      navigateFallbackAllowlist: [/^\/$/],
       globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}'],
     },
     manifest: {
@@ -58,6 +60,7 @@ export default defineNuxtConfig({
       background_color: '#ffffff',
       display: 'standalone',
       start_url: '/',
+      scope: '/',
       icons: [
         {
           src: '/icons/icon192.png',
