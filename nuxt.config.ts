@@ -49,8 +49,8 @@ export default defineNuxtConfig({
     injectRegister: 'auto',
     workbox: {
       navigateFallback: '/index.html',
-      navigateFallbackAllowlist: [/^\/$/],
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}'],
+      // navigateFallbackAllowlist: [/^\/$/],
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}', 'index.html'],
       runtimeCaching: [
       {
         urlPattern: /^\/index\.html$/,
