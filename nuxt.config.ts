@@ -48,18 +48,7 @@ export default defineNuxtConfig({
     manifestFilename: 'manifest.webmanifest',
     injectRegister: 'auto',
     workbox: {
-      navigateFallback: '/index.html',
-      // navigateFallbackAllowlist: [/^\/$/],
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}', 'index.html'],
-      runtimeCaching: [
-      {
-        urlPattern: /^\/index\.html$/,
-        handler: 'NetworkFirst',
-        options: {
-          cacheName: 'html-cache',
-        },
-      },
-    ],
+      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}'],
     },
     manifest: {
       name: 'YamFive',
@@ -90,6 +79,10 @@ export default defineNuxtConfig({
     },
     devOptions: {
       enabled: true, // utile anche in sviluppo
+      suppressWarnings: true,
+      navigateFallback: '/',
+      navigateFallbackAllowlist: [/^\/$/],
+      type: 'module',
     }
   },
   vite: {
