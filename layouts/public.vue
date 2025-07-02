@@ -17,31 +17,49 @@ const loaderStore = useMyLoaderStore()
         </header>
         <main class="pt-9 pb-3">
           {{ $pwa }}
-          {{ $pwa?.needRefresh }}
-          {{ $pwa?.showInstallPrompt }}
-          {{ $pwa?.offlineReady }}
-          {{ $pwa?.isPWAInstalled }}
-          <div v-if="$pwa?.needRefresh">
-            New content available, click on reload button to update.
-            <div>
-              <button @click="$pwa.updateServiceWorker()">Reload</button>
-              <button @click="$pwa?.cancelPrompt()">Close</button>
+          <ClientOnly>
+            <div
+              v-if="$pwa?.offlineReady || $pwa?.needRefresh"
+              class="pwa-toast"
+              role="alert"
+            >
+              <div class="message">
+                <span v-if="$pwa.offlineReady">
+                  App ready to work offline
+                </span>
+                <span v-else>
+                  New content available, click on reload button to update.
+                </span>
+              </div>
+              <button
+                v-if="$pwa.needRefresh"
+                @click="$pwa.updateServiceWorker()"
+              >
+                Reload
+              </button>
+              <button @click="$pwa.cancelPrompt()">
+                Close
+              </button>
             </div>
-          </div>
+            <div
+              v-if="$pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh"
+              class="pwa-toast"
+              role="alert"
+            >
+              <div class="message">
+                <span>
+                  Install PWA
+                </span>
+              </div>
+              <button @click="$pwa.install()">
+                Install
+              </button>
+              <button @click="$pwa.cancelInstall()">
+                Cancel
+              </button>
+            </div>
+          </ClientOnly>
           <slot />
-          <div v-if="$pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh">
-            <div class="message">
-              <span>
-                Install PWA
-              </span>
-            </div>
-            <button @click="$pwa.install()">
-              Install
-            </button>
-            <button @click="$pwa.cancelInstall()">
-              Cancel
-            </button>
-          </div>
         </main>
         <footer>
           <p class="text-xs text-center yf-text-light">

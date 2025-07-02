@@ -31,7 +31,12 @@ export default defineNuxtConfig({
     '@nuxtjs/device',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
-    '@vite-pwa/nuxt'
+    '@vite-pwa/nuxt',
+    (_, nuxt) => {
+      nuxt.hook('pwa:beforeBuildServiceWorker', (options) => {
+        console.log('pwa:beforeBuildServiceWorker: ', options.base)
+      })
+    },
   ],
   i18n: {
     vueI18n: '../i18n.config.ts',
@@ -43,6 +48,9 @@ export default defineNuxtConfig({
     storesDirs: ['./stores/**']
   },
   pwa: {
+    strategies: 'injectManifest',
+    srcDir: 'service-worker',
+    filename: 'sw.ts',
     registerType: 'autoUpdate',
     manifest: {
       name: 'YamFive',
@@ -71,8 +79,17 @@ export default defineNuxtConfig({
         }
       ]
     },
+    workbox: {
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
+    injectManifest: {
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
     devOptions: {
       enabled: true, // utile anche in sviluppo
+      suppressWarnings: true,
+      navigateFallback: '/',
+      navigateFallbackAllowlist: [/^\/$/],
       type: 'module',
     }
   },
