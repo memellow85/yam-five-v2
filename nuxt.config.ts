@@ -44,14 +44,6 @@ export default defineNuxtConfig({
   },
   pwa: {
     registerType: 'autoUpdate',
-    includeAssets: ['favicon.ico', 'icons/icon192.png', 'icons/icon512.png', 'index.html'],
-    manifestFilename: 'manifest.webmanifest',
-    injectRegister: 'auto',
-    workbox: {
-      navigateFallback: '/index.html',
-      navigateFallbackAllowlist: [/^\/$/],
-      globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}'],
-    },
     manifest: {
       name: 'YamFive',
       short_name: 'YamFive',
@@ -60,7 +52,6 @@ export default defineNuxtConfig({
       background_color: '#ffffff',
       display: 'standalone',
       start_url: '/',
-      scope: '/',
       icons: [
         {
           src: '/icons/icon192.png',
@@ -82,9 +73,6 @@ export default defineNuxtConfig({
     },
     devOptions: {
       enabled: true, // utile anche in sviluppo
-      suppressWarnings: true,
-      navigateFallback: '/',
-      navigateFallbackAllowlist: [/^\/$/],
       type: 'module',
     }
   },
