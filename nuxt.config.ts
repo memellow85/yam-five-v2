@@ -48,7 +48,7 @@ export default defineNuxtConfig({
     manifestFilename: 'manifest.webmanifest',
     injectRegister: 'auto',
     workbox: {
-      navigateFallback: '/',
+      navigateFallback: '/index.html',
       navigateFallbackAllowlist: [/^\/$/],
       globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webmanifest}'],
     },
