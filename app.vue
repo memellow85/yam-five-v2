@@ -1,9 +1,8 @@
+<script lang="ts" setup>
+</script>
+
 <template>
-  <div>
-    <NuxtPwaManifest />
-    <NuxtLoadingIndicator />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
