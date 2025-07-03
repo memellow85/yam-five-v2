@@ -9,6 +9,7 @@ export default defineNuxtConfig({
           content:
             'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height',
         },
+        { name: 'theme-color', content: '#0d47a1' }
       ],
       link: [
         { rel: 'manifest', href: '/manifest.webmanifest' }
@@ -17,7 +18,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2025-05-15',
   devServer: {
-    port: 5001, // default: 3000
+    port: 5001,
   },
   devtools: { enabled: false },
   ssr: false,
@@ -32,34 +33,16 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/i18n',
     '@vite-pwa/nuxt',
-    (_, nuxt) => {
-      nuxt.hook('pwa:beforeBuildServiceWorker', (options) => {
-        console.log('pwa:beforeBuildServiceWorker: ', options.base)
-      })
-    },
   ],
-  i18n: {
-    vueI18n: '../i18n.config.ts',
-    bundle: {
-      optimizeTranslationDirective: false,
-    },
-  },
-  pinia: {
-    storesDirs: ['./stores/**']
-  },
   pwa: {
-    strategies: 'injectManifest',
-    srcDir: 'service-worker',
-    filename: 'sw.ts',
     registerType: 'autoUpdate',
     manifest: {
+      id: 'yamfive',
       name: 'YamFive',
       short_name: 'YamFive',
       description: 'The dices game',
-      theme_color: '#ffffff',
-      background_color: '#ffffff',
-      display: 'standalone',
-      start_url: '/',
+      theme_color: '#00FF00',
+      background_color: '#00FF00',
       icons: [
         {
           src: '/icons/icon192.png',
@@ -80,18 +63,21 @@ export default defineNuxtConfig({
       ]
     },
     workbox: {
-      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
-    },
-    injectManifest: {
-      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+      navigateFallback: '/',
     },
     devOptions: {
       enabled: true, // utile anche in sviluppo
-      suppressWarnings: true,
-      navigateFallback: '/',
-      navigateFallbackAllowlist: [/^\/$/],
-      type: 'module',
+      type: 'module'
     }
+  },
+  i18n: {
+    vueI18n: '../i18n.config.ts',
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
+  },
+  pinia: {
+    storesDirs: ['./stores/**']
   },
   vite: {
     css: {
