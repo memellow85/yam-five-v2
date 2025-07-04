@@ -41,8 +41,8 @@ export default defineNuxtConfig({
       name: 'YamFive',
       short_name: 'YamFive',
       description: 'The dices game',
-      theme_color: '#00FF00',
-      background_color: '#00FF00',
+      theme_color: '#f1f5f9',
+      background_color: '#f1f5f9',
       icons: [
         {
           src: '/icons/icon192.png',
