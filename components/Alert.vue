@@ -7,14 +7,23 @@ interface AlertInterface {
   warning?: boolean
   error?: boolean
   success?: boolean
+  buttons?: boolean
 }
 const props = defineProps<AlertInterface>()
 
-defineEmits(['closeModal'])
+defineEmits(['closeModal', 'submitModal'])
 </script>
 
 <template>
-  <Modal :show="props.show" :warning="props.warning" :success="props.success" :error="props.error" @close-modal="$emit('closeModal')">
+  <Modal 
+    :show="props.show" 
+    :warning="props.warning" 
+    :success="props.success" 
+    :error="props.error" 
+    :close="props.buttons"
+    :submit="props.buttons"
+    @close-modal="$emit('closeModal')"
+    @submit-modal="$emit('submitModal')">
     <div class="flex justify-start items-center">
       <ExclamationCircleIcon 
         v-if="props.error" 
