@@ -107,10 +107,10 @@ onUnmounted(() => {
         <main class="flex-1 overflow-y-auto">
           <slot />
         </main>
-        <div class="flex flex-row justify-around items-center p-2 rounded-3xl bg-slate-200 mx-3 mb-3">
+        <div class="flex flex-row justify-around items-center p-2 rounded-3xl bg-slate-200 mx-3 mb-6">
           <!-- TODO valutare anche se mettere la scritta sotto l'icona stile tab loggato -->
           <NuxtLink to="/private">
-            <HomeIcon v-if="currentStore.page !== 'private-home'" class="yf-text-base h-6 w-6" />
+            <HomeIcon v-if="currentStore.page !== 'private'" class="yf-text-base h-6 w-6" />
             <HomeIconSolid v-else class="yf-text-base h-6 w-6" />
           </NuxtLink>
           <NuxtLink to="/private/guide">
@@ -132,7 +132,7 @@ onUnmounted(() => {
 
       <!-- MENU -->
       <Modal :show="menuModal" scroll menu @close-modal="showMenuHandler(false)">
-        <div class="flex flex-col">
+        <div class="flex flex-col h-full">
           <div class="px-3 py-4 bg-slate-200">
             <Avatar />
             <div class="mt-3 flex justify-between items-center">

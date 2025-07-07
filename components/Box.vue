@@ -13,7 +13,6 @@ const emit = defineEmits(['setValue'])
 
 const setValueHandler = (key: string) => {
   const elm = gameStore.getSpecificDiceGame(key)
-  console.log(elm?.active)
   if (elm?.active && !gameStore.loading_dice) {
     emit('setValue', key)
   }

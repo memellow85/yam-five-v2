@@ -43,7 +43,7 @@ defineEmits(['closeModal', 'submitModal'])
         'flex-1',
         {
           'py-3 overflow-y-auto': !props.menu,
-          'overflow-hidden grid grid-cols-1': props.menu
+          'overflow-hidden flex flex-col': props.menu
         }
       ]">
       <slot />
