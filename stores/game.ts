@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { checkPoints, getBonus, checkFinishedGame } from '~/utils'
 import type { Match, Stage } from '~/classes';
-import { Dices, Game, Statistics } from '~/classes'
+import { Dices, Extra, Game, Statistics } from '~/classes'
 
 export const useMyGameStore = defineStore('myGameStore', {
   state: () => ({
@@ -125,18 +125,22 @@ export const useMyGameStore = defineStore('myGameStore', {
       }
       switch (this.section) {
         case 'down':
+          this.down.extra = new Extra()
           this.down.match[key as keyof Match] = result
           this.down.extra = getBonus(this.down.extra, this.down.match)
           break
         case 'free':
+          this.free.extra = new Extra()
           this.free.match[key as keyof Match] = result
           this.free.extra = getBonus(this.free.extra, this.free.match)
           break
         case 'dry':
+          this.dry.extra = new Extra()
           this.dry.match[key as keyof Match] = result
           this.dry.extra = getBonus(this.dry.extra, this.dry.match)
           break
         case 'up':
+          this.up.extra = new Extra()
           this.up.match[key as keyof Match] = result
           this.up.extra = getBonus(this.up.extra, this.up.match)
           break

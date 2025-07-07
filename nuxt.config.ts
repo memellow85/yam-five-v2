@@ -12,6 +12,7 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#f1f5f9' },
       ],
     },
+    pageTransition: { name: 'fade', mode: 'out-in' },
   },
   compatibilityDate: '2025-05-15',
   devServer: {
