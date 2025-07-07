@@ -9,10 +9,6 @@ export default defineNuxtConfig({
           content:
             'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height',
         },
-        { name: 'theme-color', content: '#0d47a1' }
-      ],
-      link: [
-        { rel: 'manifest', href: '/manifest.webmanifest' }
       ],
     },
   },
@@ -35,7 +31,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
   ],
   pwa: {
-    registerType: 'autoUpdate',
+    registerType: 'prompt',
     manifest: {
       id: 'yamfive',
       name: 'YamFive',
@@ -43,6 +39,8 @@ export default defineNuxtConfig({
       description: 'The dices game',
       theme_color: '#f1f5f9',
       background_color: '#f1f5f9',
+      display: 'standalone',
+      start_url: '/',
       icons: [
         {
           src: '/icons/icon192.png',
