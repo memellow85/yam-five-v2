@@ -32,8 +32,6 @@ export const checkFinishedGame = (type: string, down: any, free: any, dry: any, 
   const finishFree: boolean = Object.keys(free).filter((v) => free[v].active).length === 0
   const finishDry: boolean = Object.keys(dry).filter((v) => dry[v].active).length === 0
 
-  console.log(finishUp, finishDown, finishFree, finishDry)
-
   switch (type) {
     case 'easy':
       finished = finishFree
@@ -257,13 +255,13 @@ export const getBonus = (extra: Extra, match: Match) => {
       case 'scale':
         if (match.scale.value > 0) {
           extra.box4 += match.scale.value
-          extra.bonus_full = 40
+          extra.bonus_scale = 40
         }
         break
       case 'yam':
         if (match.yam.value > 0) {
           extra.box4 += match.yam.value
-          extra.bonus_full = 50
+          extra.bonus_yam = 50
         }
         break
     }
@@ -279,9 +277,13 @@ export const getBonus = (extra: Extra, match: Match) => {
     extra.bonus_min_max = 30
   }
 
+  extra.total = 
+    extra.box1 + extra.box2 + extra.box3 + extra.box4 + 
+    extra.bonus_eleven + extra.bonus_full + extra.bonus_min_max + 
+    extra.bonus_over_60 + extra.bonus_over_70 + 
+    extra.bonus_poker + extra.bonus_scale + extra.bonus_yam
+
   return extra
 }
 
-export const updateStatistics = (dices: Dices) => {
-  
-}
+export const updateStatistics = (dices: Dices) => {}

@@ -17,6 +17,7 @@ export default defineI18nConfig(() => ({
       password: 'Password',
       repeat_password: 'Repeat Password',
       register: 'Register',
+      guide: 'Guide',
       name: 'Name',
       back: 'Back',
       copy_link: 'Copy link to share',
@@ -43,6 +44,8 @@ export default defineI18nConfig(() => ({
       record: 'Personal Record',
       message_install_app: 'Install YamFive for the best user experiences!! For install add page to home!!',
       message_update_app: 'New version in available!! Update now!!',
+      message_finish_1: 'Congratulations!! ',
+      message_finish_2: 'You finished with a score of ',
       update_app: 'Update App',
       group: {
         box1: 'Numbers',
@@ -78,6 +81,17 @@ export default defineI18nConfig(() => ({
       },
       game: {
         select_level: 'Select Level'
+      },
+      bonus: {
+        name: 'Bonus',
+        over_60: 'Bonus Over 60',
+        over_70: 'Bonus Over 70',
+        eleven: 'Bonus <= 11',
+        full: 'Bonus Full',
+        poker: 'Bonus Poker',
+        scale: 'Bonus Scale',
+        yam: 'Bonus YamFive',
+        min_max: 'Bonus Min & Max',
       },
       config: {},
       loader: {

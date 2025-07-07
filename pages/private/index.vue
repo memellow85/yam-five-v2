@@ -7,7 +7,10 @@ definePageMeta({
 
 useCurrent()
 
+const { $eventBus } = useNuxtApp()
 const gameStore = useMyGameStore()
+
+defineEmits(['playEvent'])
 
 const setSectionHandler = (section: string) => {
   gameStore.setSectionGame(section)
@@ -30,7 +33,7 @@ const setValueHandler = (key: string) => {
         <p class="text-lg yf-text-base">{{ $t('start_msg_3') }}</p>
         <p 
           class="flex justify-center items-center text-lg yf-text-base-green font-bold cursor-pointer"
-          @touchend="$emit('playEvent', true)">
+          @touchend="$eventBus.emit('playEvent', true)">
           <PlayIcon class="antialiased h-6 w-6 yf-text-base-green cursor-pointer" />
           {{ $t('play') }}
         </p>
@@ -52,9 +55,35 @@ const setValueHandler = (key: string) => {
         <p class="text-base yf-text-base">{{ $t('total_msg_1') }} {{ 3 - gameStore.num_throws }} {{ $t('total_msg_2') }} {{ gameStore.total_dices }}</p>
       </div>
     </template>
-    <div v-else class="flex-1 flex justify-center items-center">
-      <div class="flex justify-center items-center">
-        <p>finito</p>
+    <div v-else class="flex-1 flex justify-center items-center w-full">
+      <div class="flex flex-col justify-center items-center w-full">
+        <p class="text-2xl yf-text-base"><span class="font-bold">{{ $t('message_finish_1') }}:</span></p>
+        <p class="text-lg yf-text-base mb-3"><span class="font-bold">{{ $t('message_finish_2') }}:</span> {{ gameStore.free.extra.total }}</p>
+        <div v-if="gameStore.section === 'down'"></div>
+        <div v-if="gameStore.section === 'free'" class="w-full px-6 grid grid-cols-2 gap-3">
+          <div>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box1') }}:</span> {{ gameStore.free.extra.box1 }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.over_60') }}:</span> {{ gameStore.free.extra.bonus_over_60 }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.over_70') }}:</span> {{ gameStore.free.extra.bonus_over_70 }}</p>
+          </div>
+          <div>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box2') }}:</span> {{ gameStore.free.extra.box2 }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.min_max') }}:</span> {{ gameStore.free.extra.bonus_min_max }}</p>
+          </div>
+          <div>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box3') }}:</span> {{ gameStore.free.extra.box3 }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.eleven') }}:</span> {{ gameStore.free.extra.bonus_eleven }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.full') }}:</span> {{ gameStore.free.extra.bonus_full }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.poker') }}:</span> {{ gameStore.free.extra.bonus_poker }}</p>
+          </div>
+          <div>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box4') }}:</span> {{ gameStore.free.extra.box4 }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.scale') }}:</span> {{ gameStore.free.extra.bonus_scale }}</p>
+            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.yam') }}:</span> {{ gameStore.free.extra.bonus_yam }}</p>
+          </div>
+        </div>
+        <div v-if="gameStore.section === 'dry'"></div>
+        <div v-if="gameStore.section === 'up'"></div>
         <!-- TODO quando finisce mettere il dettaglio delle statistiche completo -->
       </div>
     </div>
