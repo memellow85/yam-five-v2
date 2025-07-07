@@ -7,7 +7,6 @@ definePageMeta({
 
 useCurrent()
 
-const { $eventBus } = useNuxtApp()
 const gameStore = useMyGameStore()
 
 const setSectionHandler = (section: string) => {
@@ -31,7 +30,7 @@ const setValueHandler = (key: string) => {
         <p class="text-lg yf-text-base">{{ $t('start_msg_3') }}</p>
         <p 
           class="flex justify-center items-center text-lg yf-text-base-green font-bold cursor-pointer"
-          @touchend="$eventBus.emit('playEvent', true)">
+          @touchend="$emit('playEvent', true)">
           <PlayIcon class="antialiased h-6 w-6 yf-text-base-green cursor-pointer" />
           {{ $t('play') }}
         </p>
