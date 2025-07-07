@@ -3,28 +3,33 @@ import Package from '@@/package.json'
 
 const pkg = Package
 const { $pwa } = useNuxtApp()
+const { $eventBus } = useNuxtApp()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
 
 const installApp = ref(false)
-const updateApp = ref(false)
 
-if (!$pwa?.isPWAInstalled && !$pwa?.offlineReady) {
-  installApp.value = true
-}
-if ($pwa?.isPWAInstalled && $pwa.needRefresh && !$pwa.offlineReady) {
-  updateApp.value = true
+const closeAlertPwa = () => {
+  installApp.value = false
 }
 
-const closeAlertPwa = (install: boolean) => {
-  if (install) {
-    installApp.value = false
-    $pwa?.cancelInstall()
-  } else {
-    updateApp.value = false
-    $pwa?.cancelPrompt()
+const updateAppHandler = () => {
+  loaderStore.setLoader(true)
+}
+
+onBeforeMount(() => {
+  $eventBus.on('updateApp', updateAppHandler)
+});
+
+onMounted(() => {
+  if (!$pwa?.isPWAInstalled && !$pwa?.offlineReady) {
+    installApp.value = true
   }
-}
+})
+
+onUnmounted(() => {
+  $eventBus.off('updateApp', updateAppHandler)
+});
 </script>
 
 <template>
@@ -56,8 +61,7 @@ const closeAlertPwa = (install: boolean) => {
       <Alert :show="alertStore.showAlertSucces" :message="alertStore.message" success @close-modal="alertStore.closeAlert('s')" />
       <Alert :show="alertStore.showAlertWarning" :message="alertStore.message" warning @close-modal="alertStore.closeAlert('w')" />
 
-      <Alert :show="installApp" buttons :message="$t('message_install_app')" @close-modal="closeAlertPwa(true)" @submit-modal="$pwa?.install()" />
-      <Alert :show="updateApp" buttons :message="$t('message_update_app')" @close-modal="closeAlertPwa(false)" @submit-modal="$pwa?.updateServiceWorker()" />
+      <Alert :show="installApp" warning :message="$t('message_install_app')" @close-modal="closeAlertPwa()" />
     </div>
   </div>
 </template>

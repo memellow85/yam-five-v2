@@ -41,8 +41,9 @@ export default defineI18nConfig(() => ({
       guest: 'Guest',
       last_login: 'Last Login',
       record: 'Personal Record',
-      message_install_app: 'Install YamFive for the best user experiences!!',
+      message_install_app: 'Install YamFive for the best user experiences!! For install add page to home!!',
       message_update_app: 'New version in available!! Update now!!',
+      update_app: 'Update App',
       group: {
         box1: 'Numbers',
         box2: 'Min & Max',
