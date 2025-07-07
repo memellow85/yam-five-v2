@@ -77,7 +77,7 @@ const playHandler = (level: string) => {
 const logoutHandler = async () => {
   gameStore.resetGame()
   userStore.resetUser()
-  await navigateTo('/public/login')
+  await navigateTo('/')
 }
 
 onBeforeMount(() => {
@@ -109,7 +109,7 @@ onUnmounted(() => {
         </main>
         <div class="flex flex-row justify-around items-center p-2 rounded-3xl bg-slate-200 mx-3 mb-3">
           <!-- TODO valutare anche se mettere la scritta sotto l'icona stile tab loggato -->
-          <NuxtLink to="/private/home">
+          <NuxtLink to="/private">
             <HomeIcon v-if="currentStore.page !== 'private-home'" class="yf-text-base h-6 w-6" />
             <HomeIconSolid v-else class="yf-text-base h-6 w-6" />
           </NuxtLink>
