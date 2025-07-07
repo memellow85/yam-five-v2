@@ -66,7 +66,7 @@ const submitHandler = async () => {
     loaderStore.setLoader(false)
     alertStore.setAlert('s', t('user_create'))
     setTimeout(async () => {
-      await navigateTo('/public/login')
+      await navigateTo('/')
     }, 3000)
   }, 5000)
 }
@@ -84,7 +84,7 @@ watch(
 
 <template>
   <div class="grid grid-cols-2 p-2 rounded-2xl bg-slate-200">
-    <NuxtLink to="/public/login" class="p-2 text-center yf-text-light">{{ $t('login') }}</NuxtLink>
+    <NuxtLink to="/" class="p-2 text-center yf-text-light">{{ $t('login') }}</NuxtLink>
     <p class="rounded-xl p-2 bg-slate-300 text-center yf-text-base">{{ $t('register') }}</p>
   </div>
   <div
@@ -195,5 +195,5 @@ watch(
       after:content-[' '] after:h-px after:bg-slate-200 after:w-5/12 after:block after:absolute after:right-0 after:top-1/2 after:translate-y-[-50%]">
       {{ $t('or') }}
   </p>
-  <NuxtLink to="/public/login" class="w-full text-center block leading-10 yf-btn-secondary">{{ $t('login') }}</NuxtLink>
+  <NuxtLink to="/" class="w-full text-center block leading-10 yf-btn-secondary">{{ $t('login') }}</NuxtLink>
 </template>
