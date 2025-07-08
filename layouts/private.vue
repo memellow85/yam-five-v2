@@ -212,7 +212,7 @@ onUnmounted(() => {
               <li 
                 class="flex py-3 cursor-pointer" 
                 @pointerdown="onPointerDown"
-                @pointerup="(e) => onPointerUp(e, () => goToHandler('release'))">
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('release2'))">
                 <QueueListIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.release') }}</h3>
               </li>
