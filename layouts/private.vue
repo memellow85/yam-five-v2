@@ -124,7 +124,8 @@ onUnmounted(() => {
               'bg-slate-200': gameStore.num_throws === 0,
               'bg-yamfive': gameStore.num_throws > 0,
             }]" 
-            @touchend="showPlayHandler(true)">
+            @pointerdown="onPointerDown"
+            @pointerup="(e) => onPointerUp(e, () => showPlayHandler(true))">
             <CubeIcon v-if="gameStore.game && !gameStore.finish" class="antialiased h-6 w-6 text-white" />
             <PlayIcon v-else class="antialiased h-6 w-6 text-white cursor-pointer" />
           </div>
@@ -132,7 +133,10 @@ onUnmounted(() => {
             <TrophyIcon v-if="currentStore.page !== 'private-ranking'" class="yf-text-base h-6 w-6" />
             <TrophyIconSolid v-else class="yf-text-base h-6 w-6" />
           </NuxtLink>
-          <Bars3Icon class="yf-text-base h-6 w-6 cursor-pointer" @touchend="showMenuHandler(true)" />
+          <Bars3Icon 
+            class="yf-text-base h-6 w-6 cursor-pointer" 
+            @pointerdown="onPointerDown"
+            @pointerup="(e) => onPointerUp(e, () => showMenuHandler(true))" />
         </div>
       </template>
       <Loader v-else text />
@@ -216,10 +220,19 @@ onUnmounted(() => {
           </div>
           <div class="px-3 py-4">
             <div class="grid grid-cols-2 gap-3 mb-3">
-              <button class="w-full yf-btn-secondary" @touchend="endGameHandler">{{ $t('end') }}</button>
-              <button class="w-full yf-btn-exit" @touchend="logoutHandler">{{ $t('logout') }}</button>
+              <button 
+                class="w-full yf-btn-secondary" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => endGameHandler)">{{ $t('end') }}</button>
+              <button 
+                class="w-full yf-btn-exit" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => logoutHandler)">{{ $t('logout') }}</button>
             </div>
-            <button class="w-full yf-btn-primary" @touchend="showMenuHandler(false)">{{ $t('close_menu') }}</button>
+            <button 
+              class="w-full yf-btn-primary" 
+              @pointerdown="onPointerDown"
+              @pointerup="(e) => onPointerUp(e, () => showMenuHandler(false))">{{ $t('close_menu') }}</button>
           </div>
         </div>
       </Modal>
@@ -229,9 +242,18 @@ onUnmounted(() => {
         :show="playModal" 
         :title="t('game.select_level')" 
         @close-modal="showPlayHandler(false)">
-        <button class="w-full yf-btn-secondary mb-2" @touchend="playHandler('easy')">{{ $t('easy') }}</button>
-        <button class="w-full yf-btn-secondary mb-2" @touchend="playHandler('medium')">{{ $t('medium') }}</button>
-        <button class="w-full yf-btn-secondary" @touchend="playHandler('hard')">{{ $t('hard') }}</button>
+        <button 
+          class="w-full yf-btn-secondary mb-2" 
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => playHandler('easy'))">{{ $t('easy') }}</button>
+        <button 
+          class="w-full yf-btn-secondary mb-2" 
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => playHandler('medium'))">{{ $t('medium') }}</button>
+        <button 
+          class="w-full yf-btn-secondary" 
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => playHandler('hard'))">{{ $t('hard') }}</button>
       </Modal>
 
       <!-- ALERT -->

@@ -5,6 +5,7 @@ interface DiceInterface {
 }
 const props = defineProps<DiceInterface>()
 
+const { onPointerDown, onPointerUp } = useTap()
 const gameStore = useMyGameStore()
 
 const getDice = () => {
@@ -49,7 +50,8 @@ const blockHandler = () => {
       'flex justify-center items-center': props.loading && !getDice()?.block,
       '!bg-slate-400': getDice()?.block
     }]"
-    @touchend="blockHandler">
+    @pointerdown="onPointerDown"
+    @pointerup="(e) => onPointerUp(e, () => blockHandler)">
     <template v-if="!props.loading || getDice()?.block">
       <template v-if="getDice()?.value === 1">
         <div class="h-2 w-2 rounded-full bg-slate-600 absolute left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%]" />

@@ -14,6 +14,8 @@ interface ModalInterface {
 }
 const props = defineProps<ModalInterface>()
 
+const { onPointerDown, onPointerUp } = useTap()
+
 defineEmits(['closeModal', 'submitModal'])
 </script>
 
@@ -21,7 +23,8 @@ defineEmits(['closeModal', 'submitModal'])
   <div 
     v-if="props.show" 
     class="fixed left-0 top-0 w-full h-full bg-transparent z-10" 
-    @touchend="$emit('closeModal')" />
+    @pointerdown="onPointerDown"
+    @pointerup="(e) => onPointerUp(e, () => $emit('closeModal'))" />
   <div 
     :class="[
       'fixed overflow-hidden z-20 w-11/12 left-1/2 translate-x-[-50%] transition-all duration-500 rounded-2xl bg-white p-3',
@@ -55,7 +58,8 @@ defineEmits(['closeModal', 'submitModal'])
         <button 
           v-if="props.close" 
           class="yf-btn-red-circle" 
-          @touchend="$emit('closeModal')">
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => $emit('closeModal'))">
           <XMarkIcon class="h-6 w-6" />
         </button>
       </div>
@@ -63,7 +67,8 @@ defineEmits(['closeModal', 'submitModal'])
         <button 
           v-if="props.submit" 
           class="yf-btn-green-circle"
-          @touchend="$emit('submitModal')">
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => $emit('submitModal'))">
           <CheckIcon class="h-6 w-6" />
         </button>
       </div>

@@ -15,6 +15,7 @@ interface RegisterInterface {
 }
 
 const { t } = useI18n()
+const { onPointerDown, onPointerUp } = useTap()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
 
@@ -187,7 +188,8 @@ watch(
   <button 
     class="w-full yf-btn-primary"
     :disabled="disabled"
-    @touchend="submitHandler">{{ $t('register') }}</button>
+    @pointerdown="onPointerDown"
+    @pointerup="(e) => onPointerUp(e, () => submitHandler)">{{ $t('register') }}</button>
   <p 
     class="
       my-2 text-center text-sm yf-text-light relative
