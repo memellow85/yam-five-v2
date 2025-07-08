@@ -150,6 +150,9 @@ export const useMyGameStore = defineStore('myGameStore', {
       this.total_dices = 0
       this.finish = checkFinishedGame(this.type, this.down.match, this.free.match, this.dry.match, this.up.match)
       if (this.finish) {
+        /**
+         * TODO verificare perchè forse non serve
+         */
         this.finishGame()
       }
     },

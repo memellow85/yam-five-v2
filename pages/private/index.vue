@@ -59,7 +59,8 @@ const setValueHandler = (key: string) => {
       <div class="flex flex-col justify-center items-center w-full">
         <p class="text-2xl yf-text-base"><span class="font-bold">{{ $t('message_finish_1') }}:</span></p>
         <p class="text-lg yf-text-base mb-3"><span class="font-bold">{{ $t('message_finish_2') }}:</span> {{ gameStore.free.extra.total }}</p>
-        <div v-if="gameStore.section === 'down'"></div>
+        <!-- TODO rivedere in base alla tipologia del gioco e non al modo -->
+        <div v-if="gameStore.section === 'down'" />
         <div v-if="gameStore.section === 'free'" class="w-full px-6 grid grid-cols-2 gap-3">
           <div>
             <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box1') }}:</span> {{ gameStore.free.extra.box1 }}</p>
@@ -82,8 +83,8 @@ const setValueHandler = (key: string) => {
             <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.yam') }}:</span> {{ gameStore.free.extra.bonus_yam }}</p>
           </div>
         </div>
-        <div v-if="gameStore.section === 'dry'"></div>
-        <div v-if="gameStore.section === 'up'"></div>
+        <div v-if="gameStore.section === 'dry'" />
+        <div v-if="gameStore.section === 'up'" />
         <!-- TODO quando finisce mettere il dettaglio delle statistiche completo -->
       </div>
     </div>

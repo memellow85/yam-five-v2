@@ -3,7 +3,12 @@ import { defineNuxtPlugin } from '#app';
 
 // Plugin per la gestione degli eventi all'interno dell'applicazione
 export default defineNuxtPlugin(() => {
-  const eventBus = mitt();
+  type Events = {
+    playEvent: boolean
+    updateApp: void
+  };
+
+  const eventBus = mitt<Events>();
 
   return {
     provide: {
