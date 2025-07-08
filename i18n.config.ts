@@ -47,6 +47,10 @@ export default defineI18nConfig(() => ({
       message_finish_1: 'Congratulations!! ',
       message_finish_2: 'You finished with a score of ',
       update_app: 'Update App',
+      error_404: 'Page not found!',
+      error_403: 'Permission denied!',
+      error_other: 'Generic error!',
+      go_to_home: 'Go to Home',
       group: {
         box1: 'Numbers',
         box2: 'Min & Max',

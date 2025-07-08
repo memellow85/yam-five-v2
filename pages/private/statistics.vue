@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: 'private',
+  layout: 'auth',
 })
 
 useCurrent()

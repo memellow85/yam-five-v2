@@ -212,7 +212,7 @@ onUnmounted(() => {
               <li 
                 class="flex py-3 cursor-pointer" 
                 @pointerdown="onPointerDown"
-                @pointerup="(e) => onPointerUp(e, () => goToHandler('release2'))">
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('release'))">
                 <QueueListIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.release') }}</h3>
               </li>
@@ -223,11 +223,11 @@ onUnmounted(() => {
               <button 
                 class="w-full yf-btn-secondary" 
                 @pointerdown="onPointerDown"
-                @pointerup="(e) => onPointerUp(e, () => endGameHandler)">{{ $t('end') }}</button>
+                @pointerup="(e) => onPointerUp(e, endGameHandler)">{{ $t('end') }}</button>
               <button 
                 class="w-full yf-btn-exit" 
                 @pointerdown="onPointerDown"
-                @pointerup="(e) => onPointerUp(e, () => logoutHandler)">{{ $t('logout') }}</button>
+                @pointerup="(e) => onPointerUp(e, logoutHandler)">{{ $t('logout') }}</button>
             </div>
             <button 
               class="w-full yf-btn-primary" 

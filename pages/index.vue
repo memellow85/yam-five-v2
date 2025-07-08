@@ -5,7 +5,7 @@ import useClipboard from 'vue-clipboard3'
 import Package from '@@/package.json'
 
 definePageMeta({
-  layout: 'public',
+  layout: 'guest',
 })
 
 interface LoginInterface {
@@ -135,7 +135,7 @@ onMounted(() => {
     <button 
       class="w-full yf-btn-primary"
       @pointerdown="onPointerDown"
-      @pointerup="(e) => onPointerUp(e, () => refreshHandler)">{{ $t('update_app') }}</button>
+      @pointerup="(e) => onPointerUp(e, refreshHandler)">{{ $t('update_app') }}</button>
   </div>
   <div v-else>
     <div class="grid grid-cols-2 p-2 rounded-2xl bg-slate-200">
@@ -208,7 +208,7 @@ onMounted(() => {
       class="w-full yf-btn-primary" 
       :disabled="disabled"
       @pointerdown="onPointerDown"
-      @pointerup="(e) => onPointerUp(e, () => submitHandler)">{{ $t('login') }}</button>
+      @pointerup="(e) => onPointerUp(e, submitHandler)">{{ $t('login') }}</button>
     <p 
       class="
         my-2 text-center text-sm yf-text-light relative
@@ -219,7 +219,7 @@ onMounted(() => {
     <button 
       class="w-full yf-btn-secondary"
       @pointerdown="onPointerDown"
-      @pointerup="(e) => onPointerUp(e, () => playNoLoginHandler)">{{ $t('play_no_login') }}</button>
+      @pointerup="(e) => onPointerUp(e, playNoLoginHandler)">{{ $t('play_no_login') }}</button>
     <p 
       class="
         my-2 text-center text-sm yf-text-light relative
@@ -237,7 +237,7 @@ onMounted(() => {
         href="#" 
         class="text-center text-sm underline underline-offset-2 font-bold yf-text-base"
         @pointerdown="onPointerDown"
-        @pointerup="(e) => onPointerUp(e, () => copyLinkHandler)">{{ $t('copy_link') }}</a>
+        @pointerup="(e) => onPointerUp(e, copyLinkHandler)">{{ $t('copy_link') }}</a>
     </div>
 
     <!-- MODAL RECOVERY MAIL -->
