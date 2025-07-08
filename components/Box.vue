@@ -7,6 +7,7 @@ interface BoxInterface {
 }
 const props = defineProps<BoxInterface>()
 
+const { onPointerDown, onPointerUp } = useTap()
 const gameStore = useMyGameStore()
 
 const emit = defineEmits(['setValue'])
@@ -31,7 +32,8 @@ const setValueHandler = (key: string) => {
           v-for="c in props.content" 
           :key="c" 
           class="w-14 h-14 flex flex-col justify-around items-center m-2 rounded-xl pt-2 pb-1 bg-slate-200 cursor-pointer" 
-          @touchend="setValueHandler(c)">
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => setValueHandler(c))">
           <p 
             v-if="
               gameStore.num_throws === 3 || 

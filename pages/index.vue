@@ -20,6 +20,7 @@ interface RecoveryInterface {
 
 const pkg = Package
 const { $pwa } = useNuxtApp()
+const { onPointerDown, onPointerUp } = useTap()
 const checkUpdate = ref(false)
 const { $eventBus } = useNuxtApp()
 const { toClipboard } = useClipboard()
@@ -133,7 +134,8 @@ onMounted(() => {
     <p class="yf-text-base mb-3">{{ $t('message_update_app') }}</p>
     <button 
       class="w-full yf-btn-primary"
-      @touchend="refreshHandler">{{ $t('update_app') }}</button>
+      @pointerdown="onPointerDown"
+      @pointerup="(e) => onPointerUp(e, () => refreshHandler)">{{ $t('update_app') }}</button>
   </div>
   <div v-else>
     <div class="grid grid-cols-2 p-2 rounded-2xl bg-slate-200">
@@ -196,7 +198,8 @@ onMounted(() => {
         <a 
           href="#"
           class="text-sm underline underline-offset-2 font-bold yf-text-base-green"
-          @touchend="showRecoveryMailHandler(true)">
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => showRecoveryMailHandler(true))">
           {{ $t('forgot_password') }}
         </a>
       </div>
@@ -204,7 +207,8 @@ onMounted(() => {
     <button 
       class="w-full yf-btn-primary" 
       :disabled="disabled"
-      @touchend="submitHandler">{{ $t('login') }}</button>
+      @pointerdown="onPointerDown"
+      @pointerup="(e) => onPointerUp(e, () => submitHandler)">{{ $t('login') }}</button>
     <p 
       class="
         my-2 text-center text-sm yf-text-light relative
@@ -214,7 +218,8 @@ onMounted(() => {
     </p>
     <button 
       class="w-full yf-btn-secondary"
-      @touchend="playNoLoginHandler">{{ $t('play_no_login') }}</button>
+      @pointerdown="onPointerDown"
+      @pointerup="(e) => onPointerUp(e, () => playNoLoginHandler)">{{ $t('play_no_login') }}</button>
     <p 
       class="
         my-2 text-center text-sm yf-text-light relative
@@ -226,11 +231,13 @@ onMounted(() => {
       <a 
         href="#" 
         class="text-center text-sm underline underline-offset-2 font-bold yf-text-base"
-        @touchend="showGuideModalHandler(true)">{{ $t('guide') }}</a>
+        @pointerdown="onPointerDown"
+        @pointerup="(e) => onPointerUp(e, () => showGuideModalHandler(true))">{{ $t('guide') }}</a>
       <a 
         href="#" 
         class="text-center text-sm underline underline-offset-2 font-bold yf-text-base"
-        @touchend="copyLinkHandler">{{ $t('copy_link') }}</a>
+        @pointerdown="onPointerDown"
+        @pointerup="(e) => onPointerUp(e, () => copyLinkHandler)">{{ $t('copy_link') }}</a>
     </div>
 
     <!-- MODAL RECOVERY MAIL -->
