@@ -8,6 +8,7 @@ definePageMeta({
 useCurrent()
 
 const { $eventBus } = useNuxtApp()
+const { onPointerDown, onPointerUp } = useTap()
 const gameStore = useMyGameStore()
 
 defineEmits(['playEvent'])
@@ -29,11 +30,13 @@ const setValueHandler = (key: string) => {
         <p class="text-lg yf-text-base">{{ $t('start_msg_2') }}</p>
         <a 
           class="text-lg underline underline-offset-2 font-bold yf-text-base-green cursor-pointer"
-          @touchend="navigateTo(`/private/guide`)">{{ $t('here') }}</a>
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => navigateTo(`/private/guide`))">{{ $t('here') }}</a>
         <p class="text-lg yf-text-base">{{ $t('start_msg_3') }}</p>
         <p 
           class="flex justify-center items-center text-lg yf-text-base-green font-bold cursor-pointer"
-          @touchend="$eventBus.emit('playEvent', true)">
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, () => $eventBus.emit('playEvent', true))">
           <PlayIcon class="antialiased h-6 w-6 yf-text-base-green cursor-pointer" />
           {{ $t('play') }}
         </p>
@@ -92,7 +95,8 @@ const setValueHandler = (key: string) => {
       <li 
         v-if="gameStore.type === 'hard'"
         class="flex flex-col justify-center items-center py-2 cursor-pointer" 
-        @touchend="setSectionHandler('down')">
+        @pointerdown="onPointerDown"
+        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('down'))">
         <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'down' }]">
           <ArrowDownIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'down' }]" />
           <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'down' }]">{{ $t('down') }}</p>
@@ -100,7 +104,8 @@ const setValueHandler = (key: string) => {
       </li>
       <li 
         class="flex flex-col justify-center items-center py-2 cursor-pointer" 
-        @touchend="setSectionHandler('free')">
+        @pointerdown="onPointerDown"
+        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('free'))">
         <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'free' }]">
           <ArrowsUpDownIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'free' }]" />
           <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'free' }]">{{ $t('free') }}</p>
@@ -109,7 +114,8 @@ const setValueHandler = (key: string) => {
       <li 
         v-if="gameStore.type === 'medium' || gameStore.type === 'hard'"
         class="flex flex-col justify-center items-center py-2 cursor-pointer" 
-        @touchend="setSectionHandler('dry')">
+        @pointerdown="onPointerDown"
+        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('dry'))">
         <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'dry' }]">
           <ArrowsPointingInIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'dry' }]" />
           <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'dry' }]">{{ $t('dry') }}</p>
@@ -118,7 +124,8 @@ const setValueHandler = (key: string) => {
       <li 
         v-if="gameStore.type === 'hard'"
         class="flex flex-col justify-center items-center py-2 cursor-pointer" 
-        @touchend="setSectionHandler('up')">
+        @pointerdown="onPointerDown"
+        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('up'))">
         <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'up' }]">
           <ArrowUpIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'up' }]" />
           <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'up' }]">{{ $t('up') }}</p>

@@ -82,6 +82,7 @@ export const useMyGameStore = defineStore('myGameStore', {
       }
     },
     resetGame() {
+      this.finish = false
       this.game = false
       this.type = ''
       this.section = ''
