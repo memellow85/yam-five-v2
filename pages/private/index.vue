@@ -2,7 +2,7 @@
 import { ArrowsPointingInIcon, ArrowsUpDownIcon, ArrowDownIcon, ArrowUpIcon, PlayIcon } from '@heroicons/vue/24/outline'
 
 definePageMeta({
-  layout: 'private',
+  layout: 'auth',
 })
 
 useCurrent()
