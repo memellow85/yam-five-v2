@@ -3,7 +3,7 @@ import { UserIcon, EnvelopeIcon, KeyIcon } from '@heroicons/vue/24/outline'
 import { validatorEmail, validatorPassword } from '#imports'
 
 definePageMeta({
-  layout: 'public',
+  layout: 'guest',
 })
 
 interface RegisterInterface {
@@ -189,7 +189,7 @@ watch(
     class="w-full yf-btn-primary"
     :disabled="disabled"
     @pointerdown="onPointerDown"
-    @pointerup="(e) => onPointerUp(e, () => submitHandler)">{{ $t('register') }}</button>
+    @pointerup="(e) => onPointerUp(e, submitHandler)">{{ $t('register') }}</button>
   <p 
     class="
       my-2 text-center text-sm yf-text-light relative
