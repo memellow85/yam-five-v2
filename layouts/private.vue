@@ -22,6 +22,7 @@ import {
 
 const { $eventBus } = useNuxtApp()
 const { t } = useI18n()
+const { onPointerDown, onPointerUp } = useTap()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
 const currentStore = useMyCurrentStore()
@@ -43,7 +44,7 @@ const showMenuHandler = (value: boolean) => {
 }
 
 const showPlayHandler = (value: boolean) => {
-  if (!gameStore.game) {
+  if (!gameStore.game || gameStore.finish) {
     playModal.value = value
   } else if (gameStore.num_throws > 0) {
     gameStore.playThrowsGame()
@@ -60,6 +61,7 @@ const endGameHandler = () => {
 }
 
 const playHandler = (level: string) => {
+  gameStore.resetGame()
   showPlayHandler(false)
   gameStore.setTypeGame(level)
   gameStore.setStartGame(true)
@@ -117,8 +119,13 @@ onUnmounted(() => {
             <BookOpenIcon v-if="currentStore.page !== 'private-guide'" class="yf-text-base h-6 w-6" />
             <BookOpenIconSolid v-else class="yf-text-base h-6 w-6" />
           </NuxtLink>
-          <div class="flex justify-center items-center rounded-2xl p-2 bg-yamfive" @touchend="showPlayHandler(true)">
-            <CubeIcon v-if="gameStore.game" class="antialiased h-6 w-6 text-white" />
+          <div 
+            :class="['flex justify-center items-center rounded-2xl p-2', {
+              'bg-slate-200': gameStore.num_throws === 0,
+              'bg-yamfive': gameStore.num_throws > 0,
+            }]" 
+            @touchend="showPlayHandler(true)">
+            <CubeIcon v-if="gameStore.game && !gameStore.finish" class="antialiased h-6 w-6 text-white" />
             <PlayIcon v-else class="antialiased h-6 w-6 text-white cursor-pointer" />
           </div>
           <NuxtLink to="/private/ranking">
@@ -142,39 +149,66 @@ onUnmounted(() => {
           </div>
           <div class="flex-1 overflow-y-auto">
             <ul class="p-3">
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('profile')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('profile'))">
                 <UserIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.profile') }}</h3> 
               </li>
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('global')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('global'))">
                 <Squares2X2Icon class="yf-text-base h-6 w-6" /> 
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.global') }}</h3>
               </li>
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('ranking')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('ranking'))">
                 <TrophyIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.ranking') }}</h3>
               </li>
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('challenge')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('challenge'))">
                 <UserGroupIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.challenge') }}</h3>
               </li>
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('statistics')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('statistics'))">
                 <ChartBarIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.statistics') }}</h3>
               </li>
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('chat')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('chat'))">
                 <ChatBubbleOvalLeftEllipsisIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.chat') }}</h3>
               </li>
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('config')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('config'))">
                 <CogIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.config') }}</h3>
               </li>
-              <li class="flex py-3 border-b border-slate-100 cursor-pointer" @touchend="goToHandler('guide')">
+              <li 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('guide'))">
                 <BookOpenIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.guide') }}</h3>
               </li>
-              <li class="flex py-3 cursor-pointer" @touchend="goToHandler('release')">
+              <li 
+                class="flex py-3 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('release'))">
                 <QueueListIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.release') }}</h3>
               </li>

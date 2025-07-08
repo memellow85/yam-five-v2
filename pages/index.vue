@@ -161,7 +161,7 @@ onMounted(() => {
           :placeholder="$t('email')"
           @focus="isFocus = true"
           @blur="onBlurHandler('email')"
-        />
+        >
       </div>
       <div class="w-full relative">
         <KeyIcon 
@@ -181,14 +181,14 @@ onMounted(() => {
           :placeholder="$t('password')"
           @focus="isFocus = true"
           @blur="onBlurHandler('password')"
-        />
+        >
       </div>
     </div>
     <div class="grid grid-cols-2 mt-1 mb-5">
       <label class="yf-checkbox-label">
         <span class="flex cursor-pointer">
-          <input type="checkbox" class="sr-only" name="remember_me" v-model="formData.remember" />
-          <span class="w-[14px] h-[14px] before:w-[8px] before:h-[8px] before:content-[' '] yf-checkbox-label-span"></span>
+          <input v-model="formData.remember" type="checkbox" class="sr-only" name="remember_me" >
+          <span class="w-[14px] h-[14px] before:w-[8px] before:h-[8px] before:content-[' '] yf-checkbox-label-span"/>
         </span>
         <span class="yf-checkbox-label_span">{{ $t('remember_me') }}</span>
       </label>
@@ -251,7 +251,7 @@ onMounted(() => {
             class="w-full rounded-lg h-10 pl-9 yf-input-base"
             autocomplete="off"
             :placeholder="$t('email')"
-          />
+          >
         </div>
       </div>
     </Modal>
