@@ -35,7 +35,6 @@ onUnmounted(() => {
 <template>
   <div class="h-dvh w-dvw grid grid-cols-1 place-items-center overflow-hidden bg-slate-100">
     <div class="w-96 p-3 grid grid-cols-1">
-      {{ $pwa }}
       <template v-if="!loaderStore.show">
         <header>
           <h1 class="font-special text-center text-3xl yf-text-base">

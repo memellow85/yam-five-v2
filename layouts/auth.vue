@@ -12,7 +12,8 @@ import {
   Squares2X2Icon,
   UserGroupIcon,
   QueueListIcon,
-  PlayIcon
+  PlayIcon,
+  ExclamationTriangleIcon,
 } from '@heroicons/vue/24/outline'
 import { 
   HomeIcon as HomeIconSolid,
@@ -109,7 +110,7 @@ onUnmounted(() => {
         <main class="flex-1 overflow-y-auto">
           <slot />
         </main>
-        <div class="flex flex-row justify-around items-center p-2 rounded-3xl bg-slate-200 mx-3 mb-6">
+        <div class="flex flex-row justify-around items-center p-2 rounded-3xl bg-slate-200 mx-4 mb-6">
           <!-- TODO valutare anche se mettere la scritta sotto l'icona stile tab loggato -->
           <NuxtLink to="/private">
             <HomeIcon v-if="currentStore.page !== 'private'" class="yf-text-base h-6 w-6" />
@@ -121,7 +122,7 @@ onUnmounted(() => {
           </NuxtLink>
           <div 
             :class="['flex justify-center items-center rounded-2xl p-2', {
-              'bg-slate-200': gameStore.num_throws === 0,
+              'bg-slate-400': gameStore.num_throws === 0,
               'bg-yamfive': gameStore.num_throws > 0,
             }]" 
             @pointerdown="onPointerDown"
@@ -210,11 +211,18 @@ onUnmounted(() => {
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.guide') }}</h3>
               </li>
               <li 
-                class="flex py-3 cursor-pointer" 
+                class="flex py-3 border-b border-slate-100 cursor-pointer" 
                 @pointerdown="onPointerDown"
                 @pointerup="(e) => onPointerUp(e, () => goToHandler('release'))">
                 <QueueListIcon class="yf-text-base h-6 w-6" />
                 <h3 class="ml-2 yf-text-base">{{ $t('menu.release') }}</h3>
+              </li>
+              <li 
+                class="flex py-3 cursor-pointer" 
+                @pointerdown="onPointerDown"
+                @pointerup="(e) => onPointerUp(e, () => goToHandler('report'))">
+                <ExclamationTriangleIcon class="yf-text-base h-6 w-6" />
+                <h3 class="ml-2 yf-text-base">{{ $t('menu.report') }}</h3>
               </li>
             </ul>
           </div>

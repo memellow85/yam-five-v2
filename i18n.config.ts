@@ -51,6 +51,7 @@ export default defineI18nConfig(() => ({
       error_403: 'Permission denied!',
       error_other: 'Generic error!',
       go_to_home: 'Go to Home',
+      wip: 'Work in progress!',
       group: {
         box1: 'Numbers',
         box2: 'Min & Max',
@@ -81,7 +82,8 @@ export default defineI18nConfig(() => ({
         chat: 'Chat',
         config: 'Configuration',
         guide: 'Guide',
-        release: 'Release'
+        release: 'Release',
+        report: 'Report a bug/improvement'
       },
       game: {
         select_level: 'Select Level'

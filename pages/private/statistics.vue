@@ -7,5 +7,7 @@ useCurrent()
 </script>
 
 <template>
-  <div class="px-2">statistics</div>
+  <div class="px-2">
+    <Wip />
+  </div>
 </template>

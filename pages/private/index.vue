@@ -88,7 +88,7 @@ const setValueHandler = (key: string) => {
         </div>
         <div v-if="gameStore.section === 'dry'" />
         <div v-if="gameStore.section === 'up'" />
-        <!-- TODO quando finisce mettere il dettaglio delle statistiche completo -->
+        <!-- TODO quando finisce link che manda al dettaglio delle statistiche completo -->
       </div>
     </div>
     <ul class="flex items-center justify-around bg-slate-200 w-auto px-3 my-3 rounded-3xl">
