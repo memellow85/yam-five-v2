@@ -47,11 +47,11 @@ const setValueHandler = (key: string) => {
     <template v-if="!gameStore.finish">
       <div class="flex-1 flex justify-center items-center">
         <div class="px-16 flex justify-center items-center flex-wrap">
-          <Dice value="1" :loading="gameStore.loading_dice" />
-          <Dice value="2" :loading="gameStore.loading_dice" />
-          <Dice value="3" :loading="gameStore.loading_dice" />
-          <Dice value="4" :loading="gameStore.loading_dice" />
-          <Dice value="5" :loading="gameStore.loading_dice" />
+          <Dice value="1" :loading="gameStore.loading_dice_1" />
+          <Dice value="2" :loading="gameStore.loading_dice_2" />
+          <Dice value="3" :loading="gameStore.loading_dice_3" />
+          <Dice value="4" :loading="gameStore.loading_dice_4" />
+          <Dice value="5" :loading="gameStore.loading_dice_5" />
         </div>
       </div>
       <div class="text-center">
@@ -62,33 +62,9 @@ const setValueHandler = (key: string) => {
       <div class="flex flex-col justify-center items-center w-full">
         <p class="text-2xl yf-text-base"><span class="font-bold">{{ $t('message_finish_1') }}:</span></p>
         <p class="text-lg yf-text-base mb-3"><span class="font-bold">{{ $t('message_finish_2') }}:</span> {{ gameStore.free.extra.total }}</p>
-        <!-- TODO rivedere in base alla tipologia del gioco e non al modo -->
-        <div v-if="gameStore.section === 'down'" />
-        <div v-if="gameStore.section === 'free'" class="w-full px-6 grid grid-cols-2 gap-3">
-          <div>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box1') }}:</span> {{ gameStore.free.extra.box1 }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.over_60') }}:</span> {{ gameStore.free.extra.bonus_over_60 }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.over_70') }}:</span> {{ gameStore.free.extra.bonus_over_70 }}</p>
-          </div>
-          <div>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box2') }}:</span> {{ gameStore.free.extra.box2 }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.min_max') }}:</span> {{ gameStore.free.extra.bonus_min_max }}</p>
-          </div>
-          <div>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box3') }}:</span> {{ gameStore.free.extra.box3 }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.eleven') }}:</span> {{ gameStore.free.extra.bonus_eleven }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.full') }}:</span> {{ gameStore.free.extra.bonus_full }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.poker') }}:</span> {{ gameStore.free.extra.bonus_poker }}</p>
-          </div>
-          <div>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('group.box4') }}:</span> {{ gameStore.free.extra.box4 }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.scale') }}:</span> {{ gameStore.free.extra.bonus_scale }}</p>
-            <p class="text-base yf-text-base"><span class="font-bold">{{ $t('bonus.yam') }}:</span> {{ gameStore.free.extra.bonus_yam }}</p>
-          </div>
-        </div>
-        <div v-if="gameStore.section === 'dry'" />
-        <div v-if="gameStore.section === 'up'" />
-        <!-- TODO quando finisce mettere il dettaglio delle statistiche completo -->
+        <NuxtLink 
+          to="/private/statistics" 
+          class="text-sm underline underline-offset-2 font-bold yf-text-base-green">{{ $t('view_all_statistics') }}</NuxtLink>
       </div>
     </div>
     <ul class="flex items-center justify-around bg-slate-200 w-auto px-3 my-3 rounded-3xl">
@@ -136,18 +112,22 @@ const setValueHandler = (key: string) => {
       <div class="flex flex-nowrap">
         <Box 
           title="box1" 
+          help="help1"
           :content="['one', 'two', 'three', 'four', 'five', 'six']"
           @set-value="setValueHandler" />
         <Box 
-          title="box2" 
+          title="box2"
+          help="help2" 
           :content="['min', 'max']"
           @set-value="setValueHandler" />
         <Box 
           title="box3" 
+          help="help3"
           :content="['eleven', 'full', 'poker']" 
           @set-value="setValueHandler" />
         <Box 
           title="box4" 
+          help="help4"
           :content="['scale', 'yam']" 
           @set-value="setValueHandler" />
       </div>
