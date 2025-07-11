@@ -50,9 +50,7 @@ const showPlayHandler = (value: boolean) => {
   } else if (gameStore.num_throws > 0) {
     gameStore.playThrowsGame()
   } else {
-    /**
-     * TODO alert che dice di selezionare una cella per proseguire
-     */
+    alertStore.setAlert('w', t('finish_throws'))
   }
 }
 
@@ -100,18 +98,12 @@ onUnmounted(() => {
           <h1 class="font-special text-center text-2xl yf-text-base">
             {{ $t('name_app') }}
           </h1>
-          <!-- TODO aggiungere icona al titolo -->
-          <h2 
-            v-if="currentStore.title"
-            class="pb-1 mt-2 border-b border-slate-200 text-xl yf-text-base">
-            {{ currentStore.title }}
-          </h2>
+          <CustomTitle v-if="currentStore.title" />
         </header>
         <main class="flex-1 overflow-y-auto">
           <slot />
         </main>
         <div class="flex flex-row justify-around items-center p-2 rounded-3xl bg-slate-200 mx-4 mb-6">
-          <!-- TODO valutare anche se mettere la scritta sotto l'icona stile tab loggato -->
           <NuxtLink to="/private">
             <HomeIcon v-if="currentStore.page !== 'private'" class="yf-text-base h-6 w-6" />
             <HomeIconSolid v-else class="yf-text-base h-6 w-6" />
@@ -127,7 +119,7 @@ onUnmounted(() => {
             }]" 
             @pointerdown="onPointerDown"
             @pointerup="(e) => onPointerUp(e, () => showPlayHandler(true))">
-            <CubeIcon v-if="gameStore.game && !gameStore.finish" class="antialiased h-6 w-6 text-white" />
+            <CubeIcon v-if="gameStore.game && !gameStore.finish" class="antialiased h-6 w-6 text-white cursor-pointer" />
             <PlayIcon v-else class="antialiased h-6 w-6 text-white cursor-pointer" />
           </div>
           <NuxtLink to="/private/ranking">

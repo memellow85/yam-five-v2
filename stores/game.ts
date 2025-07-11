@@ -11,7 +11,11 @@ export const useMyGameStore = defineStore('myGameStore', {
     section: '',
     num_throws: 3,
     total_dices: 0,
-    loading_dice: false,
+    loading_dice_1: false,
+    loading_dice_2: false,
+    loading_dice_3: false,
+    loading_dice_4: false,
+    loading_dice_5: false,
     statistics: new Statistics(),
     dices: new Dices(),
     down: new Game(),
@@ -158,30 +162,54 @@ export const useMyGameStore = defineStore('myGameStore', {
       }
     },
     playThrowsGame() {
-      this.loading_dice = true
+      this.loading_dice_1 = true
+      this.loading_dice_2 = true
+      this.loading_dice_3 = true
+      this.loading_dice_4 = true
+      this.loading_dice_5 = true
       this.num_throws--
-      /**
-       * TODO aggiungere un random di tempo casuale diverso per tutti e 5 i dati
-       */
+
+      const checkFinishRandom = () => {
+        if (!this.loading_dice_1 && !this.loading_dice_2 && !this.loading_dice_3 && !this.loading_dice_4 && !this.loading_dice_5) {
+          this.total_dices = this.dices.dice1.value + this.dices.dice2.value + this.dices.dice3.value + this.dices.dice4.value + this.dices.dice5.value
+        }
+      }
+
       setTimeout(() => {
-        this.loading_dice = false
+        this.loading_dice_1 = false
         if (!this.dices.dice1.block) {
           this.dices.dice1.value = getRandomNumber()
         }
+        checkFinishRandom()
+      }, getRandomNumber(10) * 100)
+      setTimeout(() => {
+        this.loading_dice_2 = false
         if (!this.dices.dice2.block) {
           this.dices.dice2.value = getRandomNumber()
         }
+        checkFinishRandom()
+      }, getRandomNumber(10) * 100)
+      setTimeout(() => {
+        this.loading_dice_3 = false
         if (!this.dices.dice3.block) {
           this.dices.dice3.value = getRandomNumber()
         }
+        checkFinishRandom()
+      }, getRandomNumber(10) * 100)
+      setTimeout(() => {
+        this.loading_dice_4 = false
         if (!this.dices.dice4.block) {
           this.dices.dice4.value = getRandomNumber()
         }
+        checkFinishRandom()
+      }, getRandomNumber(10) * 100)
+      setTimeout(() => {
+        this.loading_dice_5 = false
         if (!this.dices.dice5.block) {
           this.dices.dice5.value = getRandomNumber()
         }
-        this.total_dices = this.dices.dice1.value + this.dices.dice2.value + this.dices.dice3.value + this.dices.dice4.value + this.dices.dice5.value
-      }, 700)
+        checkFinishRandom()
+      }, getRandomNumber(10) * 100)
     }
   }
 })
