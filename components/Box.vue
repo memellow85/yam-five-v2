@@ -64,7 +64,8 @@ const showInfoBox = (value: boolean) => {
               }]">
             {{ gameStore.getSpecificValueGame(c, false) }}
           </p>
-          <PlusIcon v-else 
+          <PlusIcon 
+            v-else 
             :class="['yf-text-base h-5 w-5 mt-1', {
               '!text-slate-300': gameStore.num_throws < 2 && gameStore.section === 'dry'
             }]" />
