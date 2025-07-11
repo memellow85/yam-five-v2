@@ -4,9 +4,11 @@ export const useCurrent = () => {
   const currentStore = useMyCurrentStore()
 
   const title = route.name?.toString().split('-')[1]
+  const translate: string = !title ? '' : t(`menu.${title}`)
+  const origin: string = !title ? '' : title
 
-  currentStore.setPage(route.name?.toString())
-  currentStore.setTitle(!title ? '' : t(`menu.${title}`))
+  currentStore.setPage(route.name?.toString())  
+  currentStore.setTitle(translate, origin)
 
   return {}
 }

@@ -22,7 +22,7 @@ defineEmits(['closeModal', 'submitModal'])
 <template>
   <div 
     v-if="props.show" 
-    class="fixed left-0 top-0 w-full h-full bg-transparent z-10" 
+    class="fixed left-0 top-0 w-full h-full bg-slate-600 opacity-50 z-10" 
     @pointerdown="onPointerDown"
     @pointerup="(e) => onPointerUp(e, () => $emit('closeModal'))" />
   <div 
@@ -30,7 +30,7 @@ defineEmits(['closeModal', 'submitModal'])
       'fixed overflow-hidden z-20 w-11/12 left-1/2 translate-x-[-50%] transition-all duration-500 rounded-2xl bg-white p-3',
       {
         '-bottom-full opacity-0': !props.show,
-        'bottom-5 opacity-100': props.show,
+        'bottom-6 opacity-100': props.show,
         '!bg-yellow-200': props.warning,
         '!bg-green-200': props.success,
         '!bg-red-200': props.error,

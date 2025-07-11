@@ -7,5 +7,7 @@ useCurrent()
 </script>
 
 <template>
-  <div class="px-2">release</div>
+  <div class="px-2">
+    <Wip />
+  </div>
 </template>
