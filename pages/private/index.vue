@@ -72,10 +72,10 @@ const setValueHandler = (key: string) => {
         v-if="gameStore.type === 'hard'"
         class="flex flex-col justify-center items-center py-2 cursor-pointer" 
         @pointerdown="onPointerDown"
-        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('down'))">
-        <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'down' }]">
-          <ArrowDownIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'down' }]" />
-          <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'down' }]">{{ $t('down') }}</p>
+        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('up'))">
+        <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'up' }]">
+          <ArrowUpIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'up' }]" />
+          <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'up' }]">{{ $t('up') }}</p>
         </div>
       </li>
       <li 
@@ -101,10 +101,10 @@ const setValueHandler = (key: string) => {
         v-if="gameStore.type === 'hard'"
         class="flex flex-col justify-center items-center py-2 cursor-pointer" 
         @pointerdown="onPointerDown"
-        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('up'))">
-        <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'up' }]">
-          <ArrowUpIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'up' }]" />
-          <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'up' }]">{{ $t('up') }}</p>
+        @pointerup="(e) => onPointerUp(e, () => setSectionHandler('down'))">
+        <div :class="['w-14 py-2 rounded-2xl flex flex-col justify-center items-center', { 'bg-yamfive': gameStore.section === 'down' }]">
+          <ArrowDownIcon :class="['h-4 w-4 yf-text-base', { '!text-white': gameStore.section === 'down' }]" />
+          <p :class="['text-xs yf-text-base', { '!text-white': gameStore.section === 'down' }]">{{ $t('down') }}</p>
         </div>
       </li>
     </ul>
