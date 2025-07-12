@@ -46,6 +46,7 @@ const formDataRecovery: RecoveryInterface = reactive({
 
 const refreshHandler = () => {
   $eventBus.emit('updateApp')
+  localStorage.setItem('yf_version', pkg.version)
   location.reload()
 }
 
@@ -118,13 +119,17 @@ watch(
 
 onMounted(() => {
   const localVersion = localStorage.getItem('yf_version')
-  if (
-    (localVersion === pkg.version || !localVersion) && $pwa && !$pwa.needRefresh && !$pwa.offlineReady) {
+  console.log(localVersion, pkg.version, $pwa)
+  if (!localVersion) {
     localStorage.setItem('yf_version', pkg.version)
-  } else if ($pwa?.needRefresh) {
-    $pwa.updateServiceWorker()
-  } else {
+  } else if(localVersion && localVersion !== pkg.version) {
     checkUpdate.value = true
+  } else if(localVersion && localVersion === pkg.version) {
+    if ($pwa) {
+      $pwa.updateServiceWorker()
+    }
+  } else {
+    checkUpdate.value = false
   }
 })
 </script>
