@@ -119,7 +119,6 @@ watch(
 
 onMounted(() => {
   const localVersion = localStorage.getItem('yf_version')
-  console.log(localVersion, pkg.version, $pwa)
   if (!localVersion) {
     localStorage.setItem('yf_version', pkg.version)
   } else if(localVersion && localVersion !== pkg.version) {
