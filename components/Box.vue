@@ -17,7 +17,7 @@ const info = ref(false)
 
 const setValueHandler = (key: string) => {
   const elm = gameStore.getSpecificDiceGame(key)
-  if (elm?.active && !gameStore.loading_dice_1 && !gameStore.loading_dice_2 && !gameStore.loading_dice_3 && !gameStore.loading_dice_4 && !gameStore.loading_dice_5) {
+  if (elm?.active && gameStore.num_throws < 3 && !gameStore.loading_dice_1 && !gameStore.loading_dice_2 && !gameStore.loading_dice_3 && !gameStore.loading_dice_4 && !gameStore.loading_dice_5) {
     emit('setValue', key)
   }
 }
@@ -46,17 +46,29 @@ const showInfoBox = (value: boolean) => {
         <div 
           v-for="c in props.content" 
           :key="c" 
-          class="w-14 h-14 flex flex-col justify-between items-center m-2 rounded-xl pt-2 pb-1 bg-slate-200 cursor-pointer" 
+          :class="['w-14 h-14 flex flex-col justify-between items-center m-2 rounded-xl pt-2 pb-1 bg-slate-200 cursor-pointer', {
+            '!bg-slate-100': !gameStore.getSpecificDiceGame(c)?.active && gameStore.getSpecificDiceGame(c)?.value === -1
+          }]"
           @pointerdown="onPointerDown"
           @pointerup="(e) => onPointerUp(e, () => setValueHandler(c))">
           <p 
             v-if="
               gameStore.num_throws === 3 || 
-              (gameStore.getSpecificValueGame(c, true) !== -1 && gameStore.num_throws !== 3)" class="text-lg yf-text-base">
+              (gameStore.getSpecificValueGame(c, true) !== -1 && gameStore.num_throws !== 3)" 
+              :class="['text-lg yf-text-base', {
+                '!text-slate-200': !gameStore.getSpecificDiceGame(c)?.active && gameStore.getSpecificDiceGame(c)?.value === -1
+              }]">
             {{ gameStore.getSpecificValueGame(c, false) }}
           </p>
-          <PlusIcon v-else class="yf-text-base h-5 w-5 mt-1" />
-          <p class="text-xs yf-text-base" >{{ $t(`stage.${c}`) }}</p>
+          <PlusIcon 
+            v-else 
+            :class="['yf-text-base h-5 w-5 mt-1', {
+              '!text-slate-300': !gameStore.getSpecificDiceGame(c)?.active && gameStore.getSpecificDiceGame(c)?.value === -1
+            }]" />
+          <p 
+            :class="['text-xs yf-text-base', {
+              '!text-slate-300': !gameStore.getSpecificDiceGame(c)?.active && gameStore.getSpecificDiceGame(c)?.value === -1
+            }]">{{ $t(`stage.${c}`) }}</p>
         </div>
       </div>
     </div>
