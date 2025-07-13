@@ -17,7 +17,7 @@ const info = ref(false)
 
 const setValueHandler = (key: string) => {
   const elm = gameStore.getSpecificDiceGame(key)
-  if (elm?.active && !gameStore.loading_dice_1 && !gameStore.loading_dice_2 && !gameStore.loading_dice_3 && !gameStore.loading_dice_4 && !gameStore.loading_dice_5) {
+  if (elm?.active && gameStore.num_throws < 3 && !gameStore.loading_dice_1 && !gameStore.loading_dice_2 && !gameStore.loading_dice_3 && !gameStore.loading_dice_4 && !gameStore.loading_dice_5) {
     emit('setValue', key)
   }
 }

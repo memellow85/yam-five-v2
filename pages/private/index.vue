@@ -61,7 +61,7 @@ const setValueHandler = (key: string) => {
     <div v-else class="flex-1 flex justify-center items-center w-full">
       <div class="flex flex-col justify-center items-center w-full">
         <p class="text-2xl yf-text-base"><span class="font-bold">{{ $t('message_finish_1') }}:</span></p>
-        <p class="text-lg yf-text-base mb-3"><span class="font-bold">{{ $t('message_finish_2') }}:</span> {{ gameStore.free.extra.total }}</p>
+        <p class="text-lg yf-text-base mb-3"><span class="font-bold">{{ $t('message_finish_2') }}:</span> {{ gameStore.free.extra.total + gameStore.down.extra.total + gameStore.up.extra.total + gameStore.dry.extra.total}}</p>
         <NuxtLink 
           to="/private/statistics" 
           class="text-sm underline underline-offset-2 font-bold yf-text-base-green">{{ $t('view_all_statistics') }}</NuxtLink>
