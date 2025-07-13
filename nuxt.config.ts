@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
   ],
   pwa: {
-    registerType: 'prompt',
+    registerType: 'autoUpdate',
     manifest: {
       id: 'yamfive',
       name: 'YamFive',
