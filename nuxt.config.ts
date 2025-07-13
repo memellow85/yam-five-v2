@@ -11,6 +11,12 @@ export default defineNuxtConfig({
         },
         { name: 'theme-color', content: '#f1f5f9' },
       ],
+      link: [
+        {
+          rel: 'manifest', 
+          href: '/manifest.webmanifest'
+        }
+      ]
     },
   },
   compatibilityDate: '2025-05-15',
@@ -34,14 +40,13 @@ export default defineNuxtConfig({
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
-      id: 'yamfive',
       name: 'YamFive',
       short_name: 'YamFive',
+      start_url: '/',
+      display: 'standalone',
       description: 'The dices game',
       theme_color: '#f1f5f9',
       background_color: '#f1f5f9',
-      display: 'standalone',
-      start_url: '/',
       icons: [
         {
           src: '/icons/icon192.png',
@@ -61,12 +66,8 @@ export default defineNuxtConfig({
         }
       ]
     },
-    workbox: {
-      navigateFallback: '/',
-    },
     devOptions: {
       enabled: true, // utile anche in sviluppo
-      type: 'module'
     }
   },
   i18n: {
