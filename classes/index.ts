@@ -3,9 +3,9 @@ export class Stage {
   active: boolean
   block: boolean
 
-  constructor () {
+  constructor (active: boolean) {
     this.value = -1
-    this.active = true
+    this.active = active
     this.block = false
   }
 }
@@ -25,23 +25,29 @@ export class Match {
   scale: Stage
   yam: Stage
 
-  constructor() {
-    this.one = new Stage()
-    this.two = new Stage()
-    this.three = new Stage()
-    this.four = new Stage()
-    this.five = new Stage()
-    this.six = new Stage()
-
-    this.min = new Stage()
-    this.max = new Stage()
-
-    this.eleven = new Stage()
-    this.full = new Stage()
-    this.poker = new Stage()
-
-    this.scale = new Stage()
-    this.yam = new Stage()
+  constructor(type: string) {
+    let defaultActive = true
+    let customActive = true
+    switch(type) {
+      case 'down': 
+      case 'up':
+        defaultActive = false
+        customActive = true
+        break
+    }
+    this.one = new Stage(type === 'up' ? customActive : defaultActive)
+    this.two = new Stage(defaultActive)
+    this.three = new Stage(defaultActive)
+    this.four = new Stage(defaultActive)
+    this.five = new Stage(defaultActive)
+    this.six = new Stage(defaultActive)
+    this.min = new Stage(defaultActive)
+    this.max = new Stage(defaultActive)
+    this.eleven = new Stage(defaultActive)
+    this.full = new Stage(defaultActive)
+    this.poker = new Stage(defaultActive)
+    this.scale = new Stage(defaultActive)
+    this.yam = new Stage(type === 'down' ? customActive : defaultActive)
   }
 }
 
@@ -81,8 +87,8 @@ export class Game {
   match: Match
   extra: Extra
 
-  constructor () {
-    this.match = new Match()
+  constructor (type: string) {
+    this.match = new Match(type)
     this.extra = new Extra()
   }
 }

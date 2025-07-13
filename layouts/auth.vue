@@ -70,7 +70,7 @@ const playHandler = (level: string) => {
       gameStore.setSectionGame('free')
       break
     case 'hard':
-      gameStore.setSectionGame('down')
+      gameStore.setSectionGame('up')
       break
   }
 }
