@@ -18,10 +18,10 @@ export const useMyGameStore = defineStore('myGameStore', {
     loading_dice_5: false,
     statistics: new Statistics(),
     dices: new Dices(),
-    down: new Game(),
-    free: new Game(),
-    dry: new Game(),
-    up: new Game()
+    down: new Game('down'),
+    free: new Game('free'),
+    dry: new Game('dry'),
+    up: new Game('up')
   }),
   getters: {
     getSpecificDiceGame: (state) => {
@@ -94,10 +94,10 @@ export const useMyGameStore = defineStore('myGameStore', {
       this.total_dices = 0
       this.statistics = new Statistics()
       this.dices = new Dices()
-      this.down = new Game()
-      this.free = new Game()
-      this.dry = new Game()
-      this.up = new Game()
+      this.down = new Game('down')
+      this.free = new Game('free')
+      this.dry = new Game('dry')
+      this.up = new Game('up')
     },
     finishGame() {},
     setSectionGame(value: string) {
@@ -128,11 +128,19 @@ export const useMyGameStore = defineStore('myGameStore', {
         active: false,
         block: false
       }
+      let checkUp = false
+      let checkDown = false
       switch (this.section) {
         case 'down':
           this.down.extra = new Extra()
           this.down.match[key as keyof Match] = result
           this.down.extra = getBonus(this.down.extra, this.down.match)
+          Object.keys(this.down.match).reverse().forEach((key: string) => {
+            if (this.down.match[key as keyof Match].value === -1 && !checkDown) {
+              this.down.match[key as keyof Match].active = true
+              checkDown = true
+            }
+          })
           break
         case 'free':
           this.free.extra = new Extra()
@@ -148,6 +156,12 @@ export const useMyGameStore = defineStore('myGameStore', {
           this.up.extra = new Extra()
           this.up.match[key as keyof Match] = result
           this.up.extra = getBonus(this.up.extra, this.up.match)
+          Object.keys(this.up.match).forEach((key: string) => {
+            if (this.up.match[key as keyof Match].value === -1 && !checkUp) {
+              this.up.match[key as keyof Match].active = true
+              checkUp = true
+            }
+          })
           break
       }
       this.dices = new Dices()
@@ -168,6 +182,19 @@ export const useMyGameStore = defineStore('myGameStore', {
       this.loading_dice_4 = true
       this.loading_dice_5 = true
       this.num_throws--
+
+      // controllo attivazione e disattivazione per giocata dry
+      if (this.num_throws < 2) {
+        Object.keys(this.dry.match).forEach((key: string) => {
+          this.dry.match[key as keyof Match].active = false
+        })
+      } else {
+        Object.keys(this.dry.match).forEach((key: string) => {
+          if (this.dry.match[key as keyof Match].value === -1) {
+            this.dry.match[key as keyof Match].active = true
+          }
+        })
+      }
 
       const checkFinishRandom = () => {
         if (!this.loading_dice_1 && !this.loading_dice_2 && !this.loading_dice_3 && !this.loading_dice_4 && !this.loading_dice_5) {

@@ -1,4 +1,4 @@
-import type { Dices, Extra, Match } from "~/classes"
+import type { Extra, Match } from "~/classes"
 
 // Validazione indirizzo mail
 export const validatorEmail = (email: string): boolean => {
@@ -285,5 +285,3 @@ export const getBonus = (extra: Extra, match: Match) => {
 
   return extra
 }
-
-export const updateStatistics = (dices: Dices) => {}
