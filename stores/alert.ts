@@ -6,7 +6,7 @@ export const useMyAlertStore = defineStore('myAlertStore', {
     showAlertWarning: false,
     showAlertSucces: false,
     message: '',
-    timerHideAlert: 3000
+    timerHideAlert: 6000
   }),
   actions: {
     closeAlert(type: string) {

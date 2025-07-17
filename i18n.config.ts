@@ -41,7 +41,7 @@ export default defineI18nConfig(() => ({
       total_msg_2: ' is ',
       guest: 'Guest',
       last_login: 'Last Login',
-      record: 'Personal Record',
+      record: 'Personal Records',
       message_install_app: 'Install YamFive for the best user experiences!! For install add page to home!!',
       message_update_app: 'New version in available!! Update now!!',
       message_finish_1: 'Congratulations!! ',
@@ -54,6 +54,11 @@ export default defineI18nConfig(() => ({
       wip: 'Work in progress!',
       finish_throws: 'You are finish the throws!! Select a stage!!',
       view_all_statistics: 'View all statistics!',
+      error: {
+        not_person_find: 'Person not found!',
+        not_login_not_verified: 'User not verified!',
+        not_create: 'Problem on create!'
+      },
       group: {
         box1: 'Numbers',
         help1_1: 'Bonus sum',

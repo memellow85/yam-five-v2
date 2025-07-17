@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { checkPoints, getBonus, checkFinishedGame } from '~/utils'
 import type { Match, Stage } from '~/classes';
 import { Dices, Extra, Game, Statistics } from '~/classes'
+import { Timestamp } from 'firebase/firestore'
 
 export const useMyGameStore = defineStore('myGameStore', {
   state: () => ({
@@ -99,7 +100,57 @@ export const useMyGameStore = defineStore('myGameStore', {
       this.dry = new Game('dry')
       this.up = new Game('up')
     },
-    finishGame() {},
+    finishGame() {
+      // const firebase = useFirebase()
+      const firebaseStore = useMyFirebaseStore()
+      let data: any = null
+      switch (this.type) {
+        case 'easy':
+          data = {
+            score: {
+              campaign: {
+                easy: firebaseStore.person?.scores.campaign.easy,
+                medium: firebaseStore.person?.scores.campaign.medium,
+                hard: firebaseStore.person?.scores.campaign.hard
+              },
+              default: {
+                easy: firebaseStore.person && this.free.extra.total > firebaseStore.person?.scores.default.easy ? this.free.extra.total : firebaseStore.person?.scores.default.easy,
+                medium: firebaseStore.person?.scores.default.medium,
+                hard: firebaseStore.person?.scores.default.hard
+              }, 
+              num_game: {
+                easy: firebaseStore.person ? firebaseStore.person?.scores.num_game.easy + 1 : 0,
+                medium: firebaseStore.person?.scores.num_game.medium,
+                hard: firebaseStore.person?.scores.num_game.hard
+              }
+            },
+            dates: {
+              deleted: firebaseStore.person?.dates.deleted,
+              records: {
+                easy: firebaseStore.person && this.free.extra.total > firebaseStore.person?.scores.default.easy ? Timestamp.now() : firebaseStore.person?.dates.records.easy,
+                medium: firebaseStore.person?.dates.records.medium,
+                hard: firebaseStore.person?.dates.records.hard
+              }, 
+              updated: Timestamp.now()
+            },
+          }
+          break
+        case 'medium':
+          data = {
+            score: {},
+            dates: {},
+          }
+          break
+        case 'hard':
+          data = {
+            score: {},
+            dates: {},
+          }
+          break
+      }
+      console.log(data)
+      // firebase.updatePerson(firebaseStore.person?.doc, data)
+    },
     setSectionGame(value: string) {
       this.section = value
     },

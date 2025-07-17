@@ -20,10 +20,23 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: '2025-05-15',
+  dev: true,
   devServer: {
     port: 5001,
   },
   devtools: { enabled: false },
+  runtimeConfig: {
+    public: {
+      FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+      FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+      FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+      FIREBASE_MESSAGE_SENDER_ID: process.env.FIREBASE_MESSAGE_SENDER_ID,
+      FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+      FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
+      ENV: process.env.ENV,
+      KEY_CRIPTO_PASS: process.env.KEY_CRIPTO_PASS,
+    },
+  },
   ssr: false,
   typescript: {
     shim: false,

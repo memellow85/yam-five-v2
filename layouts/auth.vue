@@ -20,6 +20,7 @@ import {
   BookOpenIcon as BookOpenIconSolid,
   TrophyIcon as TrophyIconSolid,
 } from '@heroicons/vue/24/solid'
+import moment from 'moment'
 
 const { $eventBus } = useNuxtApp()
 const { t } = useI18n()
@@ -29,6 +30,8 @@ const loaderStore = useMyLoaderStore()
 const currentStore = useMyCurrentStore()
 const gameStore = useMyGameStore()
 const userStore = useMyUserStore()
+const firebaseStore = useMyFirebaseStore()
+const firebase = useFirebase()
 
 const menuModal = ref(false)
 const playModal = ref(false)
@@ -78,7 +81,12 @@ const playHandler = (level: string) => {
 const logoutHandler = async () => {
   gameStore.resetGame()
   userStore.resetUser()
-  await navigateTo('/')
+  const logout = await firebase.logout()
+  if (logout && logout === 'ok') {
+    await navigateTo('/')
+  } else {
+    alertStore.setAlert('e', logout)
+  }
 }
 
 onBeforeMount(() => {
@@ -140,8 +148,20 @@ onUnmounted(() => {
           <div class="px-3 py-4 bg-slate-200">
             <Avatar />
             <div class="mt-3 flex justify-between items-center">
-              <p class="text-base yf-text-base"><span class="font-bold">{{ $t('last_login') }}:</span> {{ userStore.last_login }}</p>
-              <p class="text-base yf-text-base"><span class="font-bold">{{ $t('record') }}:</span> {{ userStore.record }}</p>
+              <p class="text-base yf-text-base">
+                <!-- TODO settare data corretta per firebase -->
+                <span class="font-bold">{{ $t('last_login') }}:</span> {{ userStore.local ? userStore.last_login : moment(firebaseStore.user?.metadata.lastSignInTime).format('YYYY-MM-DD HH:mm:ss') }}
+              </p>
+            </div>
+            <div class="mt-2 flex justify-between items-center">
+              <p class="text-base yf-text-base"><span class="font-bold">{{ $t('record') }}:</span></p>
+            </div>
+            <div class="flex justify-between items-center">
+              <p class="text-base yf-text-base">
+                {{ userStore.local ? `${$t('easy')}: 0 (0)` : `${$t('easy')}: ${firebaseStore.person?.scores.default.easy} (${firebaseStore.person?.scores.num_game.easy})` }} 
+                {{ userStore.local ? `${$t('medium')}: 0 (0)` : `${$t('medium')}: ${firebaseStore.person?.scores.default.medium} (${firebaseStore.person?.scores.num_game.medium})` }} 
+                {{ userStore.local ? `${$t('hard')}: 0 (0)` : `${$t('hard')}: ${firebaseStore.person?.scores.default.hard} (${firebaseStore.person?.scores.num_game.hard})` }}
+              </p>
             </div>
           </div>
           <div class="flex-1 overflow-y-auto">

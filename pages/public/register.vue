@@ -1,23 +1,17 @@
 <script lang="ts" setup>
 import { UserIcon, EnvelopeIcon, KeyIcon } from '@heroicons/vue/24/outline'
 import { validatorEmail, validatorPassword } from '#imports'
+import type { RegisterInterface } from '~/interfaces'
 
 definePageMeta({
   layout: 'guest',
 })
 
-interface RegisterInterface {
-  name: string
-  email: string
-  conf_email: string
-  password: string
-  repeat_password: string
-}
-
 const { t } = useI18n()
 const { onPointerDown, onPointerUp } = useTap()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
+const firebase = useFirebase()
 
 const isFocus = ref(false)
 const isValidEmail = ref(true)
@@ -60,16 +54,16 @@ const onBlurHandler = (field: string) => {
 
 const submitHandler = async () => {
   loaderStore.setLoader(true)
-  /**
-   * TODO gestione reale della registrazione
-   */
-  setTimeout(() => {
-    loaderStore.setLoader(false)
+  const register = await firebase.registrer(formData)
+  loaderStore.setLoader(false)
+  if (register && register === 'ok') {
     alertStore.setAlert('s', t('user_create'))
     setTimeout(async () => {
       await navigateTo('/')
-    }, 3000)
-  }, 5000)
+    }, 1500)
+  } else {
+    alertStore.setAlert('e', register)
+  }
 }
 
 watch(
