@@ -152,7 +152,7 @@ onUnmounted(() => {
       <Modal :show="menuModal" scroll menu @close-modal="showMenuHandler(false)">
         <div class="flex flex-col h-full">
           <div class="px-3 py-4 bg-slate-200">
-            <Avatar />
+            <Avatar :person="userStore.local ? userStore.avatar : { name: firebaseStore.person?.name, image: firebaseStore.person?.avatar, guest: false }" />
             <div class="mt-3 flex justify-between items-center">
               <p class="text-base yf-text-base">
                 <!-- TODO settare data corretta per firebase -->

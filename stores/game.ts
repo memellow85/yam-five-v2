@@ -101,8 +101,6 @@ export const useMyGameStore = defineStore('myGameStore', {
       this.up = new Game('up')
     },
     async finishGame({ $eventBus, firebase }: any) {
-      // const { $eventBus } = useNuxtApp()
-      // const firebase = useFirebase()
       const firebaseStore = useMyFirebaseStore()
 
       if (firebaseStore.person) {
