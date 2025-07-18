@@ -155,7 +155,6 @@ onUnmounted(() => {
             <Avatar :person="userStore.local ? userStore.avatar : { name: firebaseStore.person?.name, image: firebaseStore.person?.avatar, guest: false }" />
             <div class="mt-3 flex justify-between items-center">
               <p class="text-base yf-text-base">
-                <!-- TODO settare data corretta per firebase -->
                 <span class="font-bold">{{ $t('last_login') }}:</span> {{ userStore.local ? userStore.last_login : moment(firebaseStore.user?.metadata.lastSignInTime).format('YYYY-MM-DD HH:mm:ss') }}
               </p>
             </div>

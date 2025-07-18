@@ -26,6 +26,7 @@ export default defineI18nConfig(() => ({
       work_in_progress: 'Work in progress!!',
       user_create: 'User create success!',
       sending_mail_recovery: 'Sending mail for recovery access',
+      info_password: 'Password must have:<br />1) At least eight character<br />2) At least one number<br />3) At least one letter lowercase and one letter uppercase<br />4) At least one symbol of this: ',
       end: 'Exit Match',
       logout: 'Logout',
       close_menu: 'Close Menu',

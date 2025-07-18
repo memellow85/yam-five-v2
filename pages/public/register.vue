@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { UserIcon, EnvelopeIcon, KeyIcon } from '@heroicons/vue/24/outline'
+import { UserIcon, EnvelopeIcon, KeyIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
 import { validatorEmail, validatorPassword } from '#imports'
 import type { RegisterInterface } from '~/interfaces'
 
@@ -50,6 +50,10 @@ const onBlurHandler = (field: string) => {
     formData.email === formData.conf_email && formData.password === formData.repeat_password && 
     formData.name !== ''
   )
+}
+
+const showInfoPasswordHandler = () => {
+  alertStore.setAlert('i', t('info_password') + '@&#36;!&#37;*?&amp;')
 }
 
 const submitHandler = async () => {
@@ -157,6 +161,10 @@ watch(
         @focus="isFocus = true"
         @blur="onBlurHandler('password')"
         />
+        <InformationCircleIcon 
+          class="antialiased h-5 w-5 text-slate-400 absolute top-1/2 translate-y-[-50%] right-2 cursor-pointer" 
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, showInfoPasswordHandler)" />
     </div>
     <div class="w-full relative">
       <KeyIcon 
@@ -177,6 +185,10 @@ watch(
         @focus="isFocus = true"
         @blur="onBlurHandler('repeat_password')"
         />
+        <InformationCircleIcon 
+          class="antialiased h-5 w-5 text-slate-400 absolute top-1/2 translate-y-[-50%] right-2 cursor-pointer" 
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, showInfoPasswordHandler)" />
     </div>
   </div>
   <button 
