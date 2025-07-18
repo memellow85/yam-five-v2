@@ -1,6 +1,6 @@
 import type { LoginInterface, RecoveryInterface, RegisterInterface } from '~/interfaces'
 import { browserLocalPersistence, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, setPersistence, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { addDoc, collection, doc, updateDoc, getDocs, query, where } from 'firebase/firestore'
+import { addDoc, collection, doc, updateDoc, getDocs, getDoc, query, where } from 'firebase/firestore'
 import { Person } from '~/classes'
 
 export const useFirebase = () => {
@@ -113,6 +113,16 @@ export const useFirebase = () => {
     try {
       const documentRef = doc($firestore, tableUser, id)
       await updateDoc(documentRef, data)
+      try {
+        const doc = await getDoc(documentRef)
+        if (doc) {
+          firebaseStore.setPerson(doc.data())
+        } else {
+          return errorLog(null, t('error.not_get_data_person'))
+        }
+      } catch (error: unknown) {
+        return errorLog(error)
+      }
       return 'ok'
     } catch (error: unknown) {
       return errorLog(error)

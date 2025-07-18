@@ -57,6 +57,10 @@ const showPlayHandler = (value: boolean) => {
   }
 }
 
+const updateFailedHandler = (value: string) => {
+  alertStore.setAlert('e', value)
+}
+
 const endGameHandler = () => {
   showMenuHandler(false)
   gameStore.resetGame()
@@ -91,10 +95,12 @@ const logoutHandler = async () => {
 
 onBeforeMount(() => {
   $eventBus.on('playEvent', showPlayHandler)
+  $eventBus.on('updateFailed', updateFailedHandler)
 });
 
 onUnmounted(() => {
   $eventBus.off('playEvent', showPlayHandler)
+  $eventBus.off('updateFailed', updateFailedHandler)
 });
 </script>
 

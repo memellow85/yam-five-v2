@@ -6,6 +6,7 @@ export default defineNuxtPlugin(() => {
   type Events = {
     playEvent: boolean
     updateApp: void
+    updateFailed: string
   };
 
   const eventBus = mitt<Events>();

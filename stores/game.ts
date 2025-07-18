@@ -100,61 +100,67 @@ export const useMyGameStore = defineStore('myGameStore', {
       this.dry = new Game('dry')
       this.up = new Game('up')
     },
-    finishGame() {
+    async finishGame({ $eventBus, firebase }: any) {
+      // const { $eventBus } = useNuxtApp()
       // const firebase = useFirebase()
       const firebaseStore = useMyFirebaseStore()
-      let data: any = null
-      switch (this.type) {
-        case 'easy':
-          data = {
-            score: {
-              campaign: {
-                easy: firebaseStore.person?.scores.campaign.easy,
-                medium: firebaseStore.person?.scores.campaign.medium,
-                hard: firebaseStore.person?.scores.campaign.hard
+
+      if (firebaseStore.person) {
+        let data: any = null
+        switch (this.type) {
+          case 'easy':
+            data = {
+              scores: {
+                campaign: {
+                  easy: firebaseStore.person.scores.campaign.easy,
+                  medium: firebaseStore.person.scores.campaign.medium,
+                  hard: firebaseStore.person.scores.campaign.hard
+                },
+                default: {
+                  easy: this.free.extra.total > firebaseStore.person.scores.default.easy ? this.free.extra.total : firebaseStore.person.scores.default.easy,
+                  medium: firebaseStore.person.scores.default.medium,
+                  hard: firebaseStore.person.scores.default.hard
+                }, 
+                num_game: {
+                  easy: firebaseStore.person.scores.num_game.easy + 1,
+                  medium: firebaseStore.person.scores.num_game.medium,
+                  hard: firebaseStore.person.scores.num_game.hard
+                }
               },
-              default: {
-                easy: firebaseStore.person && this.free.extra.total > firebaseStore.person?.scores.default.easy ? this.free.extra.total : firebaseStore.person?.scores.default.easy,
-                medium: firebaseStore.person?.scores.default.medium,
-                hard: firebaseStore.person?.scores.default.hard
-              }, 
-              num_game: {
-                easy: firebaseStore.person ? firebaseStore.person?.scores.num_game.easy + 1 : 0,
-                medium: firebaseStore.person?.scores.num_game.medium,
-                hard: firebaseStore.person?.scores.num_game.hard
-              }
-            },
-            dates: {
-              deleted: firebaseStore.person?.dates.deleted,
-              records: {
-                easy: firebaseStore.person && this.free.extra.total > firebaseStore.person?.scores.default.easy ? Timestamp.now() : firebaseStore.person?.dates.records.easy,
-                medium: firebaseStore.person?.dates.records.medium,
-                hard: firebaseStore.person?.dates.records.hard
-              }, 
-              updated: Timestamp.now()
-            },
-          }
-          break
-        case 'medium':
-          data = {
-            score: {},
-            dates: {},
-          }
-          break
-        case 'hard':
-          data = {
-            score: {},
-            dates: {},
-          }
-          break
+              dates: {
+                deleted: firebaseStore.person.dates.deleted,
+                records: {
+                  easy: this.free.extra.total > firebaseStore.person.scores.default.easy ? Timestamp.now() : firebaseStore.person.dates.records.easy,
+                  medium: firebaseStore.person.dates.records.medium,
+                  hard: firebaseStore.person.dates.records.hard
+                }, 
+                updated: Timestamp.now()
+              },
+            }
+            break
+          case 'medium':
+            data = {
+              scores: {},
+              dates: {},
+            }
+            break
+          case 'hard':
+            data = {
+              scores: {},
+              dates: {},
+            }
+            break
+        }
+        const update = await firebase.updatePerson(firebaseStore.person.doc, data)
+        if (update && update !== 'ok') {
+          $eventBus.emit('updateFailed', update)
+        }
       }
-      console.log(data)
-      // firebase.updatePerson(firebaseStore.person?.doc, data)
     },
     setSectionGame(value: string) {
       this.section = value
     },
-    setValueGame(key: string) {
+    setValueGame(key: string, { $eventBus, firebase }: any) {
       let mm: number | null = null
       const dices = Object.keys(this.dices).map((d: string) => this.dices[d as keyof Dices].value)
       if (key === 'min' || key === 'max') {
@@ -220,10 +226,7 @@ export const useMyGameStore = defineStore('myGameStore', {
       this.total_dices = 0
       this.finish = checkFinishedGame(this.type, this.down.match, this.free.match, this.dry.match, this.up.match)
       if (this.finish) {
-        /**
-         * TODO verificare perchè forse non serve
-         */
-        this.finishGame()
+        this.finishGame({ $eventBus, firebase })
       }
     },
     playThrowsGame() {

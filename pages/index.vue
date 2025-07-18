@@ -21,6 +21,7 @@ const { t } = useI18n()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
 const userStore = useMyUserStore()
+const firebaseStore = useMyFirebaseStore()
 const firebase = useFirebase()
 
 const recoveryMailModal = ref(false)
@@ -69,6 +70,7 @@ const copyLinkHandler = async () => {
 
 const playNoLoginHandler = async () => {
   userStore.setLocalUsed(true)
+  firebaseStore.setAuth(false)
   userStore.setUser({
     name: t('guest'),
     image: '',
@@ -81,6 +83,7 @@ const submitHandler = async () => {
   loaderStore.setLoader(true)
   const login = await firebase.login(formData)
   loaderStore.setLoader(false)
+  userStore.setLocalUsed(false)
   if (login && login === 'ok') {
     if (formData.remember) {
       const e_email = await encrypt(formData.email, config.public.KEY_CRIPTO_PASS)
@@ -91,9 +94,10 @@ const submitHandler = async () => {
       localStorage.setItem('yf_email', '')
       localStorage.setItem('yf_pass', '')
     }
-    userStore.setLocalUsed(false)
+    firebaseStore.setAuth(true)
     await navigateTo('/private')
   } else {
+    firebaseStore.setAuth(false)
     alertStore.setAlert('e', login)
   }
 }

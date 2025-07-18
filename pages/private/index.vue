@@ -3,6 +3,7 @@ import { ArrowsPointingInIcon, ArrowsUpDownIcon, ArrowDownIcon, ArrowUpIcon, Pla
 
 definePageMeta({
   layout: 'auth',
+  middleware: ['auth']
 })
 
 useCurrent()
@@ -10,6 +11,7 @@ useCurrent()
 const { $eventBus } = useNuxtApp()
 const { onPointerDown, onPointerUp } = useTap()
 const gameStore = useMyGameStore()
+const firebase = useFirebase()
 
 defineEmits(['playEvent'])
 
@@ -18,7 +20,7 @@ const setSectionHandler = (section: string) => {
 }
 
 const setValueHandler = (key: string) => {
-  gameStore.setValueGame(key)
+  gameStore.setValueGame(key, { $eventBus, firebase })
 }
 </script>
 

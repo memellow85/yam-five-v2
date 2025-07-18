@@ -57,7 +57,8 @@ export default defineI18nConfig(() => ({
       error: {
         not_person_find: 'Person not found!',
         not_login_not_verified: 'User not verified!',
-        not_create: 'Problem on create!'
+        not_create: 'Problem on create!',
+        not_get_data_person: 'Error to find person!'
       },
       group: {
         box1: 'Numbers',
