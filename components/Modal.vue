@@ -6,6 +6,7 @@ interface ModalInterface {
   title?: string
   close?: boolean
   submit?: boolean
+  info?: boolean
   warning?: boolean
   error?: boolean
   success?: boolean

@@ -3,22 +3,15 @@ import { EnvelopeIcon, KeyIcon } from '@heroicons/vue/24/outline'
 import { validatorEmail, validatorPassword } from '#imports'
 import useClipboard from 'vue-clipboard3'
 import Package from '@@/package.json'
+import type { RecoveryInterface, LoginInterface } from '~/interfaces'
+import { decrypt, encrypt } from '~/utils'
 
 definePageMeta({
   layout: 'guest',
 })
 
-interface LoginInterface {
-  email: string
-  password: string
-  remember: boolean
-}
-
-interface RecoveryInterface {
-  email: string
-}
-
 const pkg = Package
+const config = useRuntimeConfig()
 const { $pwa } = useNuxtApp()
 const { onPointerDown, onPointerUp } = useTap()
 const checkUpdate = ref(false)
@@ -28,6 +21,8 @@ const { t } = useI18n()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
 const userStore = useMyUserStore()
+const firebaseStore = useMyFirebaseStore()
+const firebase = useFirebase()
 
 const recoveryMailModal = ref(false)
 const guideModal = ref(false)
@@ -74,6 +69,8 @@ const copyLinkHandler = async () => {
 }
 
 const playNoLoginHandler = async () => {
+  userStore.setLocalUsed(true)
+  firebaseStore.setAuth(false)
   userStore.setUser({
     name: t('guest'),
     image: '',
@@ -82,28 +79,41 @@ const playNoLoginHandler = async () => {
   await navigateTo('/private')
 }
 
-const submitHandler = () => {
+const submitHandler = async () => {
   loaderStore.setLoader(true)
-  /**
-   * TODO gestione reale della login
-   */
-  setTimeout(async () => {
+  const login = await firebase.login(formData)
+  loaderStore.setLoader(false)
+  userStore.setLocalUsed(false)
+  if (login && login === 'ok') {
+    if (formData.remember) {
+      const e_email = await encrypt(formData.email, config.public.KEY_CRIPTO_PASS)
+      const e_password = await encrypt(formData.password, config.public.KEY_CRIPTO_PASS)
+      localStorage.setItem('yf_email', e_email)
+      localStorage.setItem('yf_pass', e_password)
+    } else {
+      localStorage.setItem('yf_email', '')
+      localStorage.setItem('yf_pass', '')
+    }
+    firebaseStore.setAuth(true)
     await navigateTo('/private')
-  }, 5000)
+  } else {
+    firebaseStore.setAuth(false)
+    alertStore.setAlert('e', login)
+  }
 }
 
-const submitRecoveryMailHandler = () => {
+const submitRecoveryMailHandler = async () => {
   recoveryMailModal.value = false
-  setTimeout(() => {
+  setTimeout(async () => {
     loaderStore.setLoader(true)
-    /**
-     * TODO gestione reale del recovery
-     */
-    setTimeout(async () => {
+    const recovery = await firebase.recovery(formDataRecovery)
+    if (recovery && recovery === 'ok') {
       loaderStore.setLoader(false)
       alertStore.setAlert('s', t('sending_mail_recovery'))
       formDataRecovery.email = ''
-    }, 3000)
+    } else {
+      alertStore.setAlert('e', recovery)
+    }
   }, 300)
 }
 
@@ -117,7 +127,7 @@ watch(
   { deep: true },
 )
 
-onMounted(() => {
+onMounted(async () => {
   const localVersion = localStorage.getItem('yf_version')
   if (!localVersion) {
     localStorage.setItem('yf_version', pkg.version)
@@ -129,6 +139,15 @@ onMounted(() => {
     }
   } else {
     checkUpdate.value = false
+  }
+  const r_email = localStorage.getItem('yf_email')
+  const r_password = localStorage.getItem('yf_pass')
+  if (r_email && r_password && r_email !== '' && r_password !== '') {
+    const d_email = await decrypt(r_email, config.public.KEY_CRIPTO_PASS)
+    const d_password = await decrypt(r_password, config.public.KEY_CRIPTO_PASS)
+    formData.email = d_email
+    formData.password = d_password
+    formData.remember = true
   }
 })
 </script>

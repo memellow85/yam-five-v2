@@ -1,23 +1,17 @@
 <script lang="ts" setup>
-import { UserIcon, EnvelopeIcon, KeyIcon } from '@heroicons/vue/24/outline'
+import { UserIcon, EnvelopeIcon, KeyIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
 import { validatorEmail, validatorPassword } from '#imports'
+import type { RegisterInterface } from '~/interfaces'
 
 definePageMeta({
   layout: 'guest',
 })
 
-interface RegisterInterface {
-  name: string
-  email: string
-  conf_email: string
-  password: string
-  repeat_password: string
-}
-
 const { t } = useI18n()
 const { onPointerDown, onPointerUp } = useTap()
 const alertStore = useMyAlertStore()
 const loaderStore = useMyLoaderStore()
+const firebase = useFirebase()
 
 const isFocus = ref(false)
 const isValidEmail = ref(true)
@@ -58,18 +52,22 @@ const onBlurHandler = (field: string) => {
   )
 }
 
+const showInfoPasswordHandler = () => {
+  alertStore.setAlert('i', t('info_password') + '@&#36;!&#37;*?&amp;')
+}
+
 const submitHandler = async () => {
   loaderStore.setLoader(true)
-  /**
-   * TODO gestione reale della registrazione
-   */
-  setTimeout(() => {
-    loaderStore.setLoader(false)
+  const register = await firebase.registrer(formData)
+  loaderStore.setLoader(false)
+  if (register && register === 'ok') {
     alertStore.setAlert('s', t('user_create'))
     setTimeout(async () => {
       await navigateTo('/')
-    }, 3000)
-  }, 5000)
+    }, 1500)
+  } else {
+    alertStore.setAlert('e', register)
+  }
 }
 
 watch(
@@ -163,6 +161,10 @@ watch(
         @focus="isFocus = true"
         @blur="onBlurHandler('password')"
         />
+        <InformationCircleIcon 
+          class="antialiased h-5 w-5 text-slate-400 absolute top-1/2 translate-y-[-50%] right-2 cursor-pointer" 
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, showInfoPasswordHandler)" />
     </div>
     <div class="w-full relative">
       <KeyIcon 
@@ -183,6 +185,10 @@ watch(
         @focus="isFocus = true"
         @blur="onBlurHandler('repeat_password')"
         />
+        <InformationCircleIcon 
+          class="antialiased h-5 w-5 text-slate-400 absolute top-1/2 translate-y-[-50%] right-2 cursor-pointer" 
+          @pointerdown="onPointerDown"
+          @pointerup="(e) => onPointerUp(e, showInfoPasswordHandler)" />
     </div>
   </div>
   <button 

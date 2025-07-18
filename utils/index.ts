@@ -25,6 +25,44 @@ export const getRandomNumber = (limit: number = 6): number => {
   return (array[0] % limit) + 1
 }
 
+export const getKey = async (key: string) => {
+  return await crypto.subtle.importKey(
+    'jwk',
+    JSON.parse(key),
+    { name: 'AES-GCM', length: 256 },
+    true,
+    ['encrypt', 'decrypt']
+  )
+}
+
+export const encrypt = async (text: string, config: string) => {
+  const key = await getKey(config)
+  const iv = crypto.getRandomValues(new Uint8Array(12)) // 96 bit IV
+  const encoded = new TextEncoder().encode(text)
+  const cipherBuffer = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    encoded
+  )
+  const full = new Uint8Array(iv.length + cipherBuffer.byteLength)
+  full.set(iv, 0)
+  full.set(new Uint8Array(cipherBuffer), iv.length)
+  return btoa(String.fromCharCode(...full))
+}
+
+export const decrypt = async (encrypted: string, config: string) => {
+  const key = await getKey(config)
+  const data = Uint8Array.from(atob(encrypted), c => c.charCodeAt(0))
+  const iv = data.slice(0, 12)
+  const ciphertext = data.slice(12)
+  const plainBuffer = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv },
+    key,
+    ciphertext
+  )
+  return new TextDecoder().decode(plainBuffer)
+}
+
 export const checkFinishedGame = (type: string, down: any, free: any, dry: any, up: any) => {
   let finished: boolean = false
   const finishUp: boolean = Object.keys(up).filter((v) => up[v].active).length === 0

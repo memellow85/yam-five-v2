@@ -4,6 +4,7 @@ import { ExclamationCircleIcon, InformationCircleIcon, CheckCircleIcon } from '@
 interface AlertInterface {
   show: boolean
   message: string
+  info?: boolean
   warning?: boolean
   error?: boolean
   success?: boolean
@@ -18,6 +19,7 @@ defineEmits(['closeModal', 'submitModal'])
   <Modal 
     :show="props.show" 
     :warning="props.warning" 
+    :info="props.info"
     :success="props.success" 
     :error="props.error" 
     :close="props.buttons"
@@ -35,6 +37,7 @@ defineEmits(['closeModal', 'submitModal'])
         v-if="props.success" 
         class="w-5 h-5 text-green-600" />
       <p
+        v-if="!props.info"
         :class="['ml-2 yf-text-base', 
           {
             '!text-red-600': props.error,
@@ -43,6 +46,8 @@ defineEmits(['closeModal', 'submitModal'])
           }]">
         {{ props.message }}
       </p>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <p v-else class="yf-text-base" v-html="props.message" />
     </div>
   </Modal>
 </template>
