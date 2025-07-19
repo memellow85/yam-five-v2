@@ -55,6 +55,7 @@ export default defineI18nConfig(() => ({
       wip: 'Work in progress!',
       finish_throws: 'You are finish the throws!! Select a stage!!',
       view_all_statistics: 'View all statistics!',
+      no_data: 'Ranking in empty!',
       error: {
         not_person_find: 'Person not found!',
         not_login_not_verified: 'User not verified!',

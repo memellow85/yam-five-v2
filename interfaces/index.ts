@@ -41,3 +41,9 @@ export interface Dates {
   records: LevelDate
   updated: Timestamp | null
 }
+
+export interface Ranking {
+  name: string
+  value: number
+  count: number
+}

@@ -129,11 +129,32 @@ export const useFirebase = () => {
     }
   }
 
+  const getPersons = async () => {
+    try {
+      const queryRef = query(
+        collection($firestore, tableUser),
+      )
+      const docs = await getDocs(queryRef)
+      if (docs && docs.docs.length > 0) {
+        const persons: any = []
+        docs.docs.forEach((doc: any) => {
+          persons.push(doc.data())
+        })
+        return persons
+      } else {
+        return []
+      }
+    } catch (error: unknown) {
+      return errorLog(error)
+    }
+  }
+
   return {
     login,
     logout,
     registrer,
     recovery,
-    updatePerson
+    updatePerson,
+    getPersons
   }
 }
