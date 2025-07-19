@@ -129,11 +129,24 @@ export const useFirebase = () => {
     }
   }
 
+  const getPersons = async () => {
+    try {
+      const queryRef = query(
+        collection($firestore, tableUser),
+      )
+      const docs = await getDocs(queryRef)
+      console.log(docs)
+    } catch (error: unknown) {
+      return errorLog(error)
+    }
+  }
+
   return {
     login,
     logout,
     registrer,
     recovery,
-    updatePerson
+    updatePerson,
+    getPersons
   }
 }

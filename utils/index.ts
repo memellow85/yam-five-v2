@@ -323,3 +323,15 @@ export const getBonus = (extra: Extra, match: Match) => {
 
   return extra
 }
+
+export const normalizeRanking = (persons: any, type: string) => {
+  const results: any = []
+  persons.forEach((person: any) => {
+    results.push({
+      name: person.name,
+      value: person.scores.default[type],
+      count: person.scores.num_game
+    })
+  })
+  return results
+}
