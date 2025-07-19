@@ -330,7 +330,7 @@ export const normalizeRanking = (persons: any, type: string) => {
     results.push({
       name: person.name,
       value: person.scores.default[type],
-      count: person.scores.num_game
+      count: person.scores.num_game[type]
     })
   })
   return results

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { Ranking } from '~/interfaces'
-
 definePageMeta({
   layout: 'auth',
   middleware: ['auth']
@@ -12,13 +10,17 @@ const { onPointerDown, onPointerUp } = useTap()
 const firebase = useFirebase()
 
 const selectedTab = ref('easy')
-let data: Ranking[] = []
+const data: any = ref([])
 
 const showCurrentTabHandler = async (value: string) => {
   selectedTab.value = value
-  const results = firebase.getPersons()
-  data = normalizeRanking(results, selectedTab.value)
+  const results = await firebase.getPersons()
+  data.value = normalizeRanking(results, selectedTab.value)
 }
+
+onMounted(async () => {
+  await showCurrentTabHandler(selectedTab.value)
+})
 </script>
 
 <template>
@@ -47,9 +49,18 @@ const showCurrentTabHandler = async (value: string) => {
       <template v-if="data.length > 0">
         <div 
           v-for="(d, k) in data" :key="k" 
-          class="h-2 flex flex-col justify-around items-center border-b">
-          <p>{{ `${k + 1})${d.name}` }}</p>
-          <p>{{ `${d.value} (${d.count})` }}</p>
+          class="py-2 flex justify-between items-center border-b">
+          <p class="yf-text-base">{{ `${k + 1}) ${d.name}` }}</p>
+          <div class="flex justify-between items-center w-28">
+            <div 
+              v-if="k < 2"
+              :class="['w-3 h-3 rounded-full', {
+                'bg-yellow-300': k === 0,
+                'bg-slate-400': k === 1,
+                'bg-yellow-600': k === 2
+              }]" />
+            <p class="yf-text-base">{{ `${d.value} (${d.count})` }}</p>
+          </div>
         </div>
       </template>
       <p v-else class="yf-text-base text-lg text-center py-3">{{ $t('no_data') }}</p>

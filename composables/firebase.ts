@@ -135,7 +135,15 @@ export const useFirebase = () => {
         collection($firestore, tableUser),
       )
       const docs = await getDocs(queryRef)
-      console.log(docs)
+      if (docs && docs.docs.length > 0) {
+        const persons: any = []
+        docs.docs.forEach((doc: any) => {
+          persons.push(doc.data())
+        })
+        return persons
+      } else {
+        return []
+      }
     } catch (error: unknown) {
       return errorLog(error)
     }
