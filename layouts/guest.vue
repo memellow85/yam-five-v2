@@ -59,6 +59,7 @@ onUnmounted(() => {
       <Alert :show="alertStore.showAlertError" :message="alertStore.message" error @close-modal="alertStore.closeAlert('e')" />
       <Alert :show="alertStore.showAlertSucces" :message="alertStore.message" success @close-modal="alertStore.closeAlert('s')" />
       <Alert :show="alertStore.showAlertWarning" :message="alertStore.message" warning @close-modal="alertStore.closeAlert('w')" />
+      <Alert :show="alertStore.showAlertInfo" :message="alertStore.message" info @close-modal="alertStore.closeAlert('i')" />
 
       <Alert :show="installApp" warning :message="$t('message_install_app')" @close-modal="closeAlertPwa()" />
     </div>

@@ -5,8 +5,9 @@ export const useMyAlertStore = defineStore('myAlertStore', {
     showAlertError: false,
     showAlertWarning: false,
     showAlertSucces: false,
+    showAlertInfo: false,
     message: '',
-    timerHideAlert: 3000
+    timerHideAlert: 6000
   }),
   actions: {
     closeAlert(type: string) {
@@ -19,6 +20,9 @@ export const useMyAlertStore = defineStore('myAlertStore', {
           break
         case 'e':
           this.showAlertError = false
+          break
+        case 'i':
+          this.showAlertInfo = false
           break
       }
     },
@@ -33,6 +37,9 @@ export const useMyAlertStore = defineStore('myAlertStore', {
           break
         case 'e':
           this.showAlertError = true
+          break
+        case 'i':
+          this.showAlertInfo = true
           break
       }
       setTimeout(() => {

@@ -1,3 +1,5 @@
+import type { Dates, Scores } from "~/interfaces"
+
 export class Stage {
   value: number
   active: boolean
@@ -136,5 +138,61 @@ export class Statistics {
 
   constructor () {
     this.number_one = 0
+  }
+}
+
+export class Person {
+  name: string
+  doc: string
+  avatar: string
+  help: boolean
+  sound: boolean
+  language: string
+  user: string
+  scores: Scores
+  dates: Dates
+  mode: string
+  theme: string
+
+  constructor (person?: Person) {
+    const scores = {
+      campaign: {
+        easy: 0,
+        medium: 0,
+        hard: 0
+      },
+      default: {
+        easy: 0,
+        medium: 0,
+        hard: 0
+      }, 
+      num_game: {
+        easy: 0,
+        medium: 0,
+        hard: 0
+      }
+    }
+
+    const dates = {
+      deleted: null,
+      records: {
+        easy: null,
+        medium: null,
+        hard: null
+      }, 
+      updated: null
+    }
+
+    this.name = person?.name || ''
+    this.doc = person?.doc || ''
+    this.avatar = person?.avatar || ''
+    this.help = person?.help || false
+    this.sound = person?.sound || false
+    this.language = person?.language || 'en'
+    this.user = person?.user || ''
+    this.scores = person?.scores || scores
+    this.dates = person?.dates || dates
+    this.mode = person?.mode || 'light'
+    this.theme = person?.theme || 'green'
   }
 }
