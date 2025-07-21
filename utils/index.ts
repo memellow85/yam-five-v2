@@ -333,5 +333,5 @@ export const normalizeRanking = (persons: any, type: string) => {
       count: person.scores.num_game[type]
     })
   })
-  return results
+  return results.sort((a: any, b: any) => a.value < b.value)
 }
