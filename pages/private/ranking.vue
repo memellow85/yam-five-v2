@@ -53,11 +53,11 @@ onMounted(async () => {
           <p class="yf-text-base">{{ `${k + 1}) ${d.name}` }}</p>
           <div class="flex justify-between items-center w-28">
             <div 
-              v-if="k < 2"
               :class="['w-3 h-3 rounded-full', {
                 'bg-yellow-300': k === 0,
                 'bg-slate-400': k === 1,
-                'bg-yellow-600': k === 2
+                'bg-yellow-600': k === 2,
+                'bg-slate-100': k > 2
               }]" />
             <p class="yf-text-base">{{ `${d.value} (${d.count})` }}</p>
           </div>
