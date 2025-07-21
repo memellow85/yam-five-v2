@@ -102,7 +102,7 @@ const isPoker = (dices: number[]) => {
   })
 
   for (const [val, num] of Object.entries(result)) {
-    if (num === 4) {
+    if (num === 4 || num === 5) {
       return {
         value: Number(val),
         total: Number(val) * 4
